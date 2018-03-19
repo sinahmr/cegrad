@@ -21,3 +21,9 @@ class Vote(models.Model):
     voter = models.ForeignKey(User, related_name='voter')
     candidate = models.ForeignKey(User, related_name='candidate')
     the_most = models.ForeignKey(TheMost)
+
+
+class Comment(models.Model):
+    commenter = models.ForeignKey(User, related_name='commenter')
+    target = models.ForeignKey(User, related_name='target', verbose_name='نظرگیرنده')
+    text = models.TextField(verbose_name='متن نظر')

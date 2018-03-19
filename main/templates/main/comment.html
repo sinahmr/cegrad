@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+
+{% block title %}نظردهی{% endblock %}
+{% block content %}
+    <div class="ui two column grid centered">
+        <div class="column">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="comment_id" value="{{ comment.id }}" />
+                <div class="ui fluid search selection dropdown">
+                    <input type="hidden" name="candidate">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">۹۳ای‌ها</div>
+                    <div class="menu">
+                        {% for candidate in candidates %}
+                          <div class="item" data-value="{{ candidate.username }}">{{ candidate.get_name }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <textarea name="text">{{ comment.text }}</textarea>
+                <input type="submit" />
+                </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $( document ).ready(function () {
+        $('.ui.dropdown').dropdown('set selected', '{{ comment.target.username }}');
+    });
+</script>
+{% endblock %}

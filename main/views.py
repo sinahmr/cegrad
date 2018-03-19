@@ -8,6 +8,8 @@ from django.shortcuts import render, get_object_or_404
 from main.models import *
 
 
+# TODO check hidden fields and security
+
 @login_required
 def question(request):
     voter = request.user
@@ -37,3 +39,38 @@ def question(request):
             'remaining_count': remaining_count
         })
 
+
+@login_required
+def comment(request):
+    commenter = request.user
+    if request.method == 'POST':
+        candidate = get_object_or_404(User, username=request.POST.get('candidate'))
+        if candidate == commenter:
+            return HttpResponseBadRequest('You cannot send comment to yourself')
+        text = request.POST.get('text')
+
+        comment_id = request.POST.get('comment_id')
+        if comment_id:
+            c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
+            if not c:
+                return HttpResponseBadRequest('You cannot access this comment')
+            c.target = candidate
+            c.text = text
+            c.save()
+        else:
+            Comment.objects.create(commenter=commenter, target=candidate, text=text)
+
+        return HttpResponseRedirect(request.path)  # TODO redirect to comments list page
+    else:
+        comment_id = request.GET.get('comment_id')
+        if comment_id:
+            c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
+            if not c:
+                return HttpResponseBadRequest('You cannot access this comment')
+        else:
+            c = None
+        candidates = User.objects.filter(is_superuser=False).exclude(username=commenter.username)
+        return render(request, 'main/comment.html', {
+            'comment': c,
+            'candidates': candidates,
+        })
