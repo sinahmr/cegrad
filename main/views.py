@@ -13,6 +13,8 @@ def question(request):
     voter = request.user
     if request.method == 'POST':
         candidate = get_object_or_404(User, username=request.POST.get('candidate'))
+        if candidate == voter:
+            return HttpResponseBadRequest('You cannot vote yourself')
         q = get_object_or_404(TheMost, pk=request.POST.get('question_id'))
         try:
             Vote.objects.create(voter=voter, candidate=candidate, the_most=q)
