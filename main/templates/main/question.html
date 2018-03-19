@@ -1,9 +1,21 @@
 {% extends 'main/base.html' %}
+{% load my_tags %}
 
 {% block title %}ترین‌ها{% endblock %}
 {% block content %}
     <div class="ui two column grid centered">
         <div class="column">
+
+            <div class="ui indicating progress" id="q-progress"
+                 data-percent="{{ voted_count|percent:remaining_count}}"
+                 data-value="{{ voted_count }}"
+                 data-total="{{ voted_count|add:remaining_count }}"
+            >
+                <div class="bar">
+                    <div class="progress"></div>
+                </div>
+                <div class="label">سوال از</div>
+            </div>
             {% if not question %}
                 <div>تموم شد :دی</div>
             {% else %}
@@ -23,7 +35,7 @@
                           {% endfor %}
                       </div>
                     </div>
-                    <input type="submit" />
+                    <input type="submit" value="بعدی"/>
                 </form>
             {% endif %}
         </div>
@@ -34,6 +46,12 @@
 <script>
     $( document ).ready(function () {
         $('.ui.dropdown').dropdown();
+        $('#q-progress').progress({
+            text: {
+                active: 'سوال {value} از {total}',
+                success: 'خسته نباشی!'
+            }
+        });
     });
 </script>
 {% endblock %}
