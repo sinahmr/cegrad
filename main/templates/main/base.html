@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{% block title %}{% endblock %}</title>
+    <!--link rel="stylesheet" type="text/css" href="{% static "semantic/semantic.css" %}"-->
+<!-- Latest compiled and minified CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.rtlcss.com/semantic-ui/2.2.6/semantic.rtl.css"
+  integrity="sha384-h/tGiTStmgbDQyTAdp2s5BfyXn7wmnFsn3vDaCPYck9YKkOuLAdjHi6y154TBVJ4"
+  crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="{% static "main/semantic/semantic.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}"/>
 </head>
@@ -16,6 +24,13 @@
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<!--script src="{% static "semantic/semantic.js" %}"></script-->
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+  src="https://cdn.rtlcss.com/semantic-ui/2.2.6/semantic.min.js"
+  integrity="sha384-kZT+CItOKWHYL+Rz37W2NEz60Pu2JJJ8wgzq+82VWsi3QM53eNFzQJZqzhPuyo63"
   crossorigin="anonymous"></script>
 <script src="{% static "main/semantic/semantic.js" %}"></script>
 {% block script %}{% endblock %}

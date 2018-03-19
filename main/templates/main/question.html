@@ -2,29 +2,33 @@
 
 {% block title %}ترین‌ها{% endblock %}
 {% block content %}
-    {% if not question %}
-        <div>تموم شد :دی</div>
-    {% else %}
-        <div>
-            <div>{{ question.title }}</div>
-            <div>{{ question.description }}</div>
+    <div class="ui two column grid centered">
+        <div class="column">
+            {% if not question %}
+                <div>تموم شد :دی</div>
+            {% else %}
+                <div>
+                    <div>{{ question.title }}</div>
+                    <div>{{ question.description }}</div>
+                </div>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="question_id" value="{{ question.id }}" />
+                    <div class="ui fluid search selection dropdown">
+                      <input type="hidden" name="candidate">
+                      <i class="dropdown icon"></i>
+                      <div class="default text">۹۳ای‌ها</div>
+                      <div class="menu">
+                          {% for candidate in candidates %}
+                              <div class="item" data-value="{{ candidate.username }}">{{ candidate.get_name }}</div>
+                          {% endfor %}
+                      </div>
+                    </div>
+                    <input type="submit" />
+                </form>
+            {% endif %}
         </div>
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="question_id" value="{{ question.id }}" />
-            <div class="ui fluid search selection dropdown">
-              <input type="hidden" name="candidate">
-              <i class="dropdown icon"></i>
-              <div class="default text">۹۳ای‌ها</div>
-              <div class="menu">
-                  {% for candidate in candidates %}
-                      <div class="item" data-value="{{ candidate.username }}">{{ candidate.get_name }}</div>
-                  {% endfor %}
-              </div>
-            </div>
-            <input type="submit" />
-        </form>
-    {% endif %}
+    </div>
 {% endblock %}
 
 {% block script %}
