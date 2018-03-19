@@ -37,3 +37,6 @@ def question(request):
             'remaining_count': remaining_count
         })
 
+
+def index(request):
+    return render(request, 'main/index.html', {})
