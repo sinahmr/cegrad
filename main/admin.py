@@ -3,8 +3,8 @@ from main.models import *
 
 
 class TheMostAdmin(admin.ModelAdmin):
-    fields = ['title', 'description']
-    list_display = ['title', 'description']
+    fields = ['text']
+    list_display = ['text']
 
 
 class VoteAdmin(admin.ModelAdmin):

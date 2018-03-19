@@ -21,7 +21,8 @@ def question(request):
         return HttpResponseRedirect(request.path)
     else:
         remaining_questions = TheMost.objects.exclude(vote__voter=voter)
-        if remaining_questions.count() > 0:
+        remaining_count = remaining_questions.count()
+        if remaining_count > 0:
             chosen_question = choice(remaining_questions)
         else:
             chosen_question = None
@@ -30,5 +31,7 @@ def question(request):
         return render(request, 'main/question.html', {
             'question': chosen_question,
             'candidates': candidates,
+            'voted_count': TheMost.objects.filter(vote__voter=voter).count(),
+            'remaining_count': remaining_count
         })
 

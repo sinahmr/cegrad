@@ -11,8 +11,7 @@ User.add_to_class('get_name', get_name)
 
 
 class TheMost(models.Model):
-    title = models.TextField()
-    description = models.TextField()
+    text = models.TextField()
 
 
 class Vote(models.Model):
