@@ -8,8 +8,7 @@
                 <div>تموم شد :دی</div>
             {% else %}
                 <div>
-                    <div>{{ question.title }}</div>
-                    <div>{{ question.description }}</div>
+                    <div>{{ question.text }}</div>
                 </div>
                 <form method="post">
                     {% csrf_token %}
