@@ -17,6 +17,7 @@ from django.conf.urls import url
 from main import views
 
 urlpatterns = [
-    url(r'q/', views.question),
-    url(r'comment/', views.comment),
+    url(r'q/', views.question, name='question'),
+    url(r'comment/', views.comment, name='comment'),
+    url(r'comments/', views.comments, name='comments'),
 ]

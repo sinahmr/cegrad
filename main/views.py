@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from main.models import *
 
@@ -22,7 +23,7 @@ def question(request):
             Vote.objects.create(voter=voter, candidate=candidate, the_most=q)
         except IntegrityError:
             return HttpResponseBadRequest('You have already voted')
-        return HttpResponseRedirect(request.path)
+        return HttpResponseRedirect(reverse('question'))
     else:
         remaining_questions = TheMost.objects.exclude(vote__voter=voter)
         remaining_count = remaining_questions.count()
@@ -60,7 +61,7 @@ def comment(request):
         else:
             Comment.objects.create(commenter=commenter, target=candidate, text=text)
 
-        return HttpResponseRedirect(request.path)  # TODO redirect to comments list page
+        return HttpResponseRedirect(reverse('comments'))
     else:
         comment_id = request.GET.get('comment_id')
         if comment_id:
@@ -74,3 +75,14 @@ def comment(request):
             'comment': c,
             'candidates': candidates,
         })
+
+
+@login_required
+def comments(request):
+    commenter = request.user
+    cs = Comment.objects.filter(commenter=commenter)
+    for c in cs:
+        c.url = reverse('comment') + ('?comment_id=%d' % c.id)
+    return render(request, 'main/comments.html', {
+        'comments': cs
+    })
