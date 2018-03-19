@@ -1,0 +1,14 @@
+from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
+
+
+class Command(BaseCommand):
+    help = 'Add users'
+
+    def handle(self, *args, **options):
+        with open('users.txt') as file:
+            for line in file:
+                user = line.rstrip()
+                email = '%s@ce.sharif.edu' % user
+                User.objects.create_user(username=user, email=email, is_staff=True, password='1')
+        print('OK')
