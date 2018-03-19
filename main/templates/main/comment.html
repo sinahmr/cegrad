@@ -6,6 +6,7 @@
         <div class="column">
             <form method="post">
                 {% csrf_token %}
+                <label>به</label>
                 <input type="hidden" name="comment_id" value="{{ comment.id }}" />
                 <div class="ui fluid search selection dropdown">
                     <input type="hidden" name="candidate">
@@ -17,8 +18,13 @@
                         {% endfor %}
                     </div>
                 </div>
-                <textarea name="text">{{ comment.text }}</textarea>
-                <input type="submit" />
+                <div class="ui form">
+                  <div class="field">
+                    <label>نظر تو</label>
+                    <textarea>{{ comment.text }}</textarea>
+                  </div>
+                </div>
+                <input type="submit" value="بفرست"/>
                 </form>
         </div>
     </div>

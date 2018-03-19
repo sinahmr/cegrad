@@ -18,8 +18,7 @@ from main import views
 
 urlpatterns = [
     url(r'q/', views.question, name='question'),
-    url(r'comment/', views.comment, name='comment'),
-    url(r'comments/', views.comments, name='comments'),
-    url(r'q/', views.question),
+    url(r'comments', views.comments, name='comments'),
+    url(r'comment', views.comment, name='comment'),
     url(r'', views.index)
 ]
