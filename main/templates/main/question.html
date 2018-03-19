@@ -24,7 +24,12 @@
                           {% endfor %}
                       </div>
                     </div>
-                    <input type="submit" />
+                    <div class="ui progress" id="q-progress" data-percent="100">
+                        <div class="bar">
+                            <div class="progress"></div>
+                        </div>
+                    </div>
+                    <input type="submit" value="بعدی"/>
                 </form>
             {% endif %}
         </div>
@@ -35,6 +40,7 @@
 <script>
     $( document ).ready(function () {
         $('.ui.dropdown').dropdown();
+        $('#q-progress').progress();
     });
 </script>
 {% endblock %}
