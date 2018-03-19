@@ -2,6 +2,14 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
+def get_name(self):
+    if self.first_name or self.last_name:
+        return self.first_name + ' ' + self.last_name
+    return self.username
+
+User.add_to_class('get_name', get_name)
+
+
 class TheMost(models.Model):
     title = models.TextField()
     description = models.TextField()

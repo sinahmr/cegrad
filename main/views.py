@@ -17,5 +17,8 @@ def question(request):
         chosen_question = choice(remaining_questions)
 
         candidates = User.objects.filter(is_superuser=False).exclude(username=voter.username)
-        return render(request, 'main/question.html')
+        return render(request, 'main/question.html', {
+            'question': chosen_question,
+            'candidates': candidates,
+        })
 
