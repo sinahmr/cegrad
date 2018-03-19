@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}نظرات تو{% endblock %}
+{% block content %}
+    <div class="ui two column grid centered">
+        <div class="column">
+            <div><a href="{% url 'comment' %}">کامنت جدید</a></div>
+            <br/>
+            {% for comment in comments %}
+                <div><a href="{{ comment.url }}"><span>به </span> {{ comment.target.get_name }}</a></div>
+            {% empty %}
+                <div>هنوز برای کسی کامنت نگذاشتی...</div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

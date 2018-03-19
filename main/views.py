@@ -4,9 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from main.models import *
 
+
+# TODO check hidden fields and security
 
 @login_required
 def question(request):
@@ -20,7 +23,7 @@ def question(request):
             Vote.objects.create(voter=voter, candidate=candidate, the_most=q)
         except IntegrityError:
             return HttpResponseBadRequest('You have already voted')
-        return HttpResponseRedirect(request.path)
+        return HttpResponseRedirect(reverse('question'))
     else:
         remaining_questions = TheMost.objects.exclude(vote__voter=voter)
         remaining_count = remaining_questions.count()
@@ -36,6 +39,53 @@ def question(request):
             'voted_count': TheMost.objects.filter(vote__voter=voter).count(),
             'remaining_count': remaining_count
         })
+
+
+@login_required
+def comment(request):
+    commenter = request.user
+    if request.method == 'POST':
+        candidate = get_object_or_404(User, username=request.POST.get('candidate'))
+        if candidate == commenter:
+            return HttpResponseBadRequest('You cannot send comment to yourself')
+        text = request.POST.get('text')
+
+        comment_id = request.POST.get('comment_id')
+        if comment_id:
+            c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
+            if not c:
+                return HttpResponseBadRequest('You cannot access this comment')
+            c.target = candidate
+            c.text = text
+            c.save()
+        else:
+            Comment.objects.create(commenter=commenter, target=candidate, text=text)
+
+        return HttpResponseRedirect(reverse('comments'))
+    else:
+        comment_id = request.GET.get('comment_id')
+        if comment_id:
+            c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
+            if not c:
+                return HttpResponseBadRequest('You cannot access this comment')
+        else:
+            c = None
+        candidates = User.objects.filter(is_superuser=False).exclude(username=commenter.username)
+        return render(request, 'main/comment.html', {
+            'comment': c,
+            'candidates': candidates,
+        })
+
+
+@login_required
+def comments(request):
+    commenter = request.user
+    cs = Comment.objects.filter(commenter=commenter)
+    for c in cs:
+        c.url = reverse('comment') + ('?comment_id=%d' % c.id)
+    return render(request, 'main/comments.html', {
+        'comments': cs
+    })
 
 
 def index(request):
