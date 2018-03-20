@@ -13,6 +13,9 @@ User.add_to_class('get_name', get_name)
 class TheMost(models.Model):
     text = models.TextField()
 
+    def __str__(self):
+        return self.text
+
 
 class Vote(models.Model):
     class Meta:
