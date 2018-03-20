@@ -27,3 +27,9 @@ class Comment(models.Model):
     commenter = models.ForeignKey(User, related_name='commenter')
     target = models.ForeignKey(User, related_name='target', verbose_name='نظرگیرنده')
     text = models.TextField(verbose_name='متن نظر')
+
+
+class Opinion(models.Model):
+    teller = models.ForeignKey(User)
+    subject = models.CharField(max_length=1000)
+    text = models.TextField()

@@ -17,8 +17,10 @@ from django.conf.urls import url
 from main import views
 
 urlpatterns = [
-    url(r'q/', views.question, name='question'),
+    url(r'q', views.question, name='question'),
     url(r'comments', views.comments, name='comments'),
     url(r'comment', views.comment, name='comment'),
+    url(r'opinions', views.opinions, name='opinions'),
+    url(r'opinion', views.opinion, name='opinion'),
     url(r'', views.index)
 ]

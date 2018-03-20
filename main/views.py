@@ -50,7 +50,7 @@ def comment(request):
             return HttpResponseBadRequest('You cannot send comment to yourself')
         text = request.POST.get('text')
 
-        comment_id = request.POST.get('comment_id')
+        comment_id = request.POST.get('id')
         if comment_id:
             c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
             if not c:
@@ -63,7 +63,7 @@ def comment(request):
 
         return HttpResponseRedirect(reverse('comments'))
     else:
-        comment_id = request.GET.get('comment_id')
+        comment_id = request.GET.get('id')
         if comment_id:
             c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
             if not c:
@@ -71,8 +71,9 @@ def comment(request):
         else:
             c = None
         candidates = User.objects.filter(is_superuser=False).exclude(username=commenter.username)
-        return render(request, 'main/comment.html', {
-            'comment': c,
+        return render(request, 'main/thought.html', {
+            'type': 'comment',
+            'item': c,
             'candidates': candidates,
         })
 
@@ -82,9 +83,56 @@ def comments(request):
     commenter = request.user
     cs = Comment.objects.filter(commenter=commenter)
     for c in cs:
-        c.url = reverse('comment') + ('?comment_id=%d' % c.id)
-    return render(request, 'main/comments.html', {
-        'comments': cs
+        c.url = reverse('comment') + ('?id=%d' % c.id)
+    return render(request, 'main/thoughts.html', {
+        'type': 'comment',
+        'items': cs
+    })
+
+
+@login_required
+def opinion(request):
+    teller = request.user
+    if request.method == 'POST':
+        subject = request.POST.get('subject')
+        if not subject:
+            return HttpResponseBadRequest('Fill the subject field')
+        text = request.POST.get('text')
+        opinion_id = request.POST.get('id')
+        if opinion_id:
+            o = Opinion.objects.filter(teller=teller, id=opinion_id).first()
+            if not o:
+                return HttpResponseBadRequest('You cannot access this opinion')
+            o.subject = subject
+            o.text = text
+            o.save()
+        else:
+            Opinion.objects.create(teller=teller, subject=subject, text=text)
+
+        return HttpResponseRedirect(reverse('opinions'))
+    else:
+        opinion_id = request.GET.get('id')
+        if opinion_id:
+            o = Opinion.objects.filter(teller=teller, id=opinion_id).first()
+            if not o:
+                return HttpResponseBadRequest('You cannot access this opinion')
+        else:
+            o = None
+        return render(request, 'main/thought.html', {
+            'type': 'opinion',
+            'item': o
+        })
+
+
+@login_required
+def opinions(request):
+    teller = request.user
+    os = Opinion.objects.filter(teller=teller)
+    for o in os:
+        o.url = reverse('opinion') + ('?id=%d' % o.id)
+    return render(request, 'main/thoughts.html', {
+        'type': 'opinion',
+        'items': os
     })
 
 
