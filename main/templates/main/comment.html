@@ -13,7 +13,7 @@
                     <div class="default text">۹۳ای‌ها</div>
                     <div class="menu">
                         {% for candidate in candidates %}
-                          <div class="item" data-value="{{ candidate.username }}">{{ candidate.get_name }}</div>
+                          <div class="item" data-value="{{ candidate.user.username }}">{{ candidate.get_name }}</div>
                         {% endfor %}
                     </div>
                 </div>
@@ -27,7 +27,7 @@
 {% block script %}
 <script>
     $( document ).ready(function () {
-        $('.ui.dropdown').dropdown('set selected', '{{ comment.target.username }}');
+        $('.ui.dropdown').dropdown('set selected', '{{ comment.target.user.username }}');
     });
 </script>
 {% endblock %}

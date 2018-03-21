@@ -12,9 +12,10 @@ from main.models import *
 
 @login_required
 def question(request):
-    voter = request.user
+    # voter = request.user
+    voter = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        candidate = get_object_or_404(User, username=request.POST.get('candidate'))
+        candidate = get_object_or_404(UserProfile, user__username=request.POST.get('candidate'))
         if candidate == voter:
             return HttpResponseBadRequest('You cannot vote yourself')
         q = get_object_or_404(TheMost, pk=request.POST.get('question_id'))
@@ -31,7 +32,7 @@ def question(request):
         else:
             chosen_question = None
 
-        candidates = User.objects.filter(is_superuser=False).exclude(username=voter.username)
+        candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(user__username=voter.user.username)
         return render(request, 'main/question.html', {
             'question': chosen_question,
             'candidates': candidates,
@@ -43,8 +44,9 @@ def question(request):
 @login_required
 def comment(request):
     commenter = request.user
+    commenter = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        candidate = get_object_or_404(User, username=request.POST.get('candidate'))
+        candidate = get_object_or_404(UserProfile, user__username=request.POST.get('candidate'))
         if candidate == commenter:
             return HttpResponseBadRequest('You cannot send comment to yourself')
         text = request.POST.get('text')
@@ -69,7 +71,7 @@ def comment(request):
                 return HttpResponseBadRequest('You cannot access this comment')
         else:
             c = None
-        candidates = User.objects.filter(is_superuser=False).exclude(username=commenter.username)
+        candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(user__username=commenter.user.username)
         return render(request, 'main/comment.html', {
             'comment': c,
             'candidates': candidates,
