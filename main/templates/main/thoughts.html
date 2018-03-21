@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block title %}نظرات تو{% endblock %}
+{% block content %}
+    <div class="ui two column grid centered">
+        <div class="column">
+            <div>
+                {% if type == 'comment' %}
+                    <a href="{% url 'comment' %}">نظر جدید</a>
+                {% else %}
+                    <a href="{% url 'opinion' %}">نظر جدید</a>
+                {% endif %}
+            </div>
+            <br/>
+            {% for item in items %}
+                <div><a href="{{ item.url }}">
+                    {% if type == 'comment' %}
+                        <span>به </span> {{ item.target.get_name }}
+                    {% else %}
+                        {{ item.subject }}
+                    {% endif %}
+                </a></div>
+            {% empty %}
+                {% if type == 'comment' %}
+                    <div>هنوز برای کسی نظر نگذاشته‌ای...</div>
+                {% else %}
+                    <div>هنوز نظری رو ثبت نکرده‌ای...</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

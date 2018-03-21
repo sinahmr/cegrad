@@ -5,16 +5,17 @@
 {% block content %}
     <div class="ui two column grid centered">
         <div class="column">
-
+            <h1>
+                ثبت نظر در ترین‌ها
+            </h1>
             <div class="ui indicating progress" id="q-progress"
-                 data-percent="{{ voted_count|percent:remaining_count}}"
                  data-value="{{ voted_count }}"
                  data-total="{{ voted_count|add:remaining_count }}"
             >
                 <div class="bar">
                     <div class="progress"></div>
                 </div>
-                <div class="label">سوال از</div>
+                <div class="label">خوش اومدی!</div>
             </div>
             {% if not question %}
                 <div>تموم شد :دی</div>
@@ -48,7 +49,7 @@
         $('.ui.dropdown').dropdown();
         $('#q-progress').progress({
             text: {
-                active: 'سوال {value} از {total}',
+                active: '{value} سوال از {total} سوالو جواب دادی!',
                 success: 'خسته نباشی!'
             }
         });

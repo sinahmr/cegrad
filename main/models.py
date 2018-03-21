@@ -25,6 +25,9 @@ class UserProfile(models.Model):
 class TheMost(models.Model):
     text = models.TextField()
 
+    def __str__(self):
+        return self.text
+
 
 class Vote(models.Model):
     class Meta:
@@ -39,3 +42,9 @@ class Comment(models.Model):
     commenter = models.ForeignKey(UserProfile, related_name='commenter')
     target = models.ForeignKey(UserProfile, related_name='target', verbose_name='نظرگیرنده')
     text = models.TextField(verbose_name='متن نظر')
+
+
+class Opinion(models.Model):
+    teller = models.ForeignKey(UserProfile)
+    subject = models.CharField(max_length=1000)
+    text = models.TextField()

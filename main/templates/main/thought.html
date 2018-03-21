@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %}
+
+{% block title %}نظردهی{% endblock %}
+{% block content %}
+    <div class="ui two column grid centered">
+        <div class="column">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ item.id }}" />
+                {% if type == 'comment' %}
+                    <label>به</label>
+                    <div class="ui fluid search selection dropdown">
+                        <input type="hidden" name="candidate" required>
+                        <i class="dropdown icon"></i>
+                        <div class="default text">۹۳ای‌ها</div>
+                        <div class="menu">
+                            {% for candidate in candidates %}
+                              <div class="item" data-value="{{ candidate.user.username }}">{{ candidate.get_name }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% else %}
+                    <label>موضوع</label>
+                    <div><input type="text" name="subject" value="{{ item.subject }}" required></div>
+                {% endif %}
+                <div class="ui form">
+                  <div class="field">
+                    <label>نظر تو</label>
+                    <textarea name="text">{{ item.text }}</textarea>
+                  </div>
+                </div>
+                <input type="submit" value="بفرست"/>
+                </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $( document ).ready(function () {
+        $('.ui.dropdown').dropdown('set selected', '{{ item.target.user.username }}');
+    });
+</script>
+{% endblock %}

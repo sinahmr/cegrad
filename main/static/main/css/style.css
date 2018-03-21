@@ -8,3 +8,8 @@ body {
     text-align: right;
     font-family: 'BYekan', Helvetica, Arial, sans-serif;
 }
+
+.content {
+    margin-top: 5em;
+    margin-bottom: 5em;
+}
