@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from main.models import UserProfile
+from django.core.mail import EmailMessage
 
 
 class Command(BaseCommand):
@@ -13,4 +14,6 @@ class Command(BaseCommand):
                 email = '%s@ce.sharif.edu' % username
                 user = User.objects.create_user(username=username, email=email, is_staff=True, password='1')
                 UserProfile.objects.create(user=user)
+                # mail = EmailMessage('cegrad', 'Hello', to=[email])
+                # mail.send()
         print('OK')

@@ -1,9 +1,10 @@
-from random import choice
-from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.db import IntegrityError
 from django.urls import reverse
+from random import choice
 from main.models import *
 
 
@@ -136,3 +137,17 @@ def opinions(request):
 
 def index(request):
     return render(request, 'main/index.html', {})
+
+
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'main/login.html', {})
+    else:
+        return render(request, 'main/login.html', {})
