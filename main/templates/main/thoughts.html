@@ -1,32 +1,92 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
 {% block title %}نظرات تو{% endblock %}
 {% block content %}
-    <div class="ui two column grid centered">
-        <div class="column">
+<div class="ui two column grid centered">
+    <div class="column">
+        {% if type == 'comment' %}
+        <h1>
+            نظرهای من درباره‌ی دوستان
+        </h1>
+        {% if items %}
+        <table class="ui very basic collapsing celled table">
+            <thead>
+            <tr>
+                <th>به</th>
+                <th>بخشی از متن</th>
+                <th>ویرایش</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <h4 class="ui image header">
+                        {% if item.target.profile_picture %}
+                        <img src="/static/media/{{ item.target.profile_picture }}" class="ui mini rounded image">
+                        {% else %}
+                        <i class="smile outline icon"></i>
+                        {% endif %}
+                        {{ item.target.get_name }}
+                    </h4>
+                </td>
+                <td>
+                    {{ item.text|truncatechars:30 }}
+                </td>
+                <td>
+                    <a href="{{ item.url }}">
+                    <i class="pencil alternative icon"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h3>
+        هنوز برای کسی نظر نگذاشته‌ای...
+        </h3>
+        {% endif %}
+        {% else %}
+        <h1>
+            نظرهای من درباره‌ی دوران دانشجویی
+        </h1>
+        {% if items %}
+        <table class="ui very basic collapsing celled table">
+            <thead>
+            <tr>
+                <th>موضوع</th>
+                <th>بخشی از متن</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    {{ item.subject }}
+                </td>
+                <td>
+                    {{ item.text|truncatechars:30 }}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <h3>
+        هنوز نظری رو ثبت نکرده‌ای...
+        </h3>
+        {% endif %}
+        {% endif %}
+
             <div>
                 {% if type == 'comment' %}
-                    <a href="{% url 'comment' %}">نظر جدید</a>
+                <a class="ui button" href="{% url 'comment' %}">نظر جدید</a>
                 {% else %}
-                    <a href="{% url 'opinion' %}">نظر جدید</a>
+                <a class="ui button" href="{% url 'opinion' %}">نظر جدید</a>
                 {% endif %}
             </div>
-            <br/>
-            {% for item in items %}
-                <div><a href="{{ item.url }}">
-                    {% if type == 'comment' %}
-                        <span>به </span> {{ item.target.get_name }}
-                    {% else %}
-                        {{ item.subject }}
-                    {% endif %}
-                </a></div>
-            {% empty %}
-                {% if type == 'comment' %}
-                    <div>هنوز برای کسی نظر نگذاشته‌ای...</div>
-                {% else %}
-                    <div>هنوز نظری رو ثبت نکرده‌ای...</div>
-                {% endif %}
-            {% endfor %}
-        </div>
     </div>
+</div>
 {% endblock %}

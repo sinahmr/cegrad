@@ -4,10 +4,20 @@
 {% block content %}
     <div class="ui two column grid centered">
         <div class="column">
-            <form method="post">
+            {% if type == 'comment' %}
+            <h1>
+                ارسال نظر
+            </h1>
+            {% else %}
+            <h1>
+                ثبت نظر
+            </h1>
+            {% endif %}
+            <form method="post" class="ui form">
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ item.id }}" />
                 {% if type == 'comment' %}
+                <div class="field">
                     <label>به</label>
                     <div class="ui fluid search selection dropdown">
                         <input type="hidden" name="candidate" required>
@@ -15,22 +25,32 @@
                         <div class="default text">۹۳ای‌ها</div>
                         <div class="menu">
                             {% for candidate in candidates %}
-                              <div class="item" data-value="{{ candidate.user.username }}">{{ candidate.get_name }}</div>
+                              <div class="item" data-value="{{ candidate.user.username }}">
+                                  <h4 class="ui image header">
+                                    {% if candidate.profile_picture %}
+                                    <img src="/static/media/{{ candidate.profile_picture }}" class="ui mini rounded image">
+                                    {% else %}
+                                    <i class="smile outline icon"></i>
+                                    {% endif %}
+                                    {{ candidate.get_name }}
+                                  </h4>
+                              </div>
                             {% endfor %}
                         </div>
                     </div>
+                </div>
                 {% else %}
+                <div class="field">
                     <label>موضوع</label>
                     <div><input type="text" name="subject" value="{{ item.subject }}" required></div>
-                {% endif %}
-                <div class="ui form">
-                  <div class="field">
-                    <label>نظر تو</label>
-                    <textarea name="text">{{ item.text }}</textarea>
-                  </div>
                 </div>
-                <input type="submit" value="بفرست"/>
-                </form>
+                {% endif %}
+                <div class="field">
+                    <label>نظر من</label>
+                    <textarea name="text">{{ item.text }}</textarea>
+                </div>
+                <input class="ui button" type="submit" value="بفرست"/>
+            </form>
         </div>
     </div>
 {% endblock %}

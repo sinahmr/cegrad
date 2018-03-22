@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'comment', views.comment, name='comment'),
     url(r'opinions', views.opinions, name='opinions'),
     url(r'opinion', views.opinion, name='opinion'),
-    url(r'', views.index)
+    url(r'', views.index, name='home')
 ]
