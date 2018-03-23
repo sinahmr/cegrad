@@ -23,20 +23,31 @@
                 <div>
                     <div>{{ question.text }}</div>
                 </div>
-                <form method="post">
+                <form method="post" class="ui form">
                     {% csrf_token %}
                     <input type="hidden" name="question_id" value="{{ question.id }}" />
-                    <div class="ui fluid search selection dropdown">
-                      <input type="hidden" name="candidate">
-                      <i class="dropdown icon"></i>
-                      <div class="default text">۹۳ای‌ها</div>
-                      <div class="menu">
-                          {% for candidate in candidates %}
-                              <div class="item" data-value="{{ candidate.user.username }}">{{ candidate.get_name }}</div>
-                          {% endfor %}
+                    <div class="field">
+                        <div class="ui fluid search selection dropdown">
+                          <input type="hidden" name="candidate">
+                          <i class="dropdown icon"></i>
+                          <div class="default text">۹۳ای‌ها</div>
+                          <div class="menu">
+                              {% for candidate in candidates %}
+                                  <div class="item" data-value="{{ candidate.user.username }}">
+                                      <h4 class="ui image header">
+                                        {% if candidate.profile_picture %}
+                                        <img src="/static/media/{{ candidate.profile_picture }}" class="ui mini rounded image">
+                                        {% else %}
+                                        <i class="smile outline icon"></i>
+                                        {% endif %}
+                                        {{ candidate.get_name }}
+                                    </h4>
+                                  </div>
+                              {% endfor %}
+                          </div>
                       </div>
                     </div>
-                    <input type="submit" value="بعدی"/>
+                    <input class="ui button" type="submit" value="بعدی"/>
                 </form>
             {% endif %}
         </div>

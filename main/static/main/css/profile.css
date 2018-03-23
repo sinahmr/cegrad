@@ -1,0 +1,19 @@
+body {
+    background-color: #DADADA;
+}
+body > .grid {
+    height: 100%;
+}
+
+.column {
+    max-width: 450px;
+}
+
+.content {
+    margin-top: 5em;
+    margin-bottom: 1em;
+}
+
+input#file{
+    display: none;
+}

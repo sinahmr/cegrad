@@ -13,7 +13,7 @@ class Command(BaseCommand):
                 username = line.rstrip()
                 email = '%s@ce.sharif.edu' % username
                 user = User.objects.create_user(username=username, email=email, is_staff=True, password='1')
-                UserProfile.objects.create(user=user)
+                UserProfile.objects.create(user=user, profile_picture='default.png')
                 # mail = EmailMessage('cegrad', 'Hello', to=[email])
                 # mail.send()
         print('OK')
