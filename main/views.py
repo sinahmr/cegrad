@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.urls import reverse
 from random import choice
 from main.models import *
+from django.contrib.auth.models import User
 
 
 # TODO check hidden fields and security
@@ -71,7 +72,8 @@ def comment(request):
                 return HttpResponseBadRequest('You cannot access this comment')
         else:
             c = None
-        candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(user__username=commenter.user.username)
+        candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(
+            user__username=commenter.user.username)
         return render(request, 'main/thought.html', {
             'type': 'comment',
             'item': c,
@@ -172,24 +174,35 @@ def profile(request):
 
 @login_required
 def set_profile(request):
-    user = get_object_or_404(UserProfile, user=request.user)
+    user = get_object_or_404(User, username=request.user.username)
     if request.method == "POST":
         firstName = request.POST.get('first-name')
         lastName = request.POST.get('last-name')
-        user.user.first_name = firstName
-        user.user.last_name = lastName
+        user.first_name = firstName
+        user.last_name = lastName
         user.save()
-    if request.method == 'POST' and request.FILES['profile-photo']:
-        myfile = request.FILES['profile-photo']
-        ext = myfile.name.split('.')[-1]
-        name = '{}.{}'.format(str(user.user.username), ext)
-        name = os.path.join('profiles', name)
-        path = settings.MEDIA_ROOT + '/' + name
-        if os.path.isfile(path):
-            os.remove(path)
-        fs = FileSystemStorage()
-        filename = fs.save(name, myfile)
-        # uploaded_file_url = fs.url(filename)
-        user.profile_picture = name
-        user.save()
+    try:
+        if request.method == 'POST' and request.FILES['profile-photo'] is not None:
+            user = get_object_or_404(UserProfile, user=request.user)
+            myfile = request.FILES['profile-photo']
+            ext = myfile.name.split('.')[-1]
+            name = '{}.{}'.format(str(user.user.username), ext)
+            name = os.path.join('profiles', name)
+            path = settings.MEDIA_ROOT + '/' + name
+            if os.path.isfile(path):
+                os.remove(path)
+            fs = FileSystemStorage()
+            filename = fs.save(name, myfile)
+            # uploaded_file_url = fs.url(filename)
+            user.profile_picture = name
+            user.save()
+    except KeyError:
+        pass
     return redirect('/profile')
+
+
+def people(request):
+    people = UserProfile.objects.filter(user__is_superuser=False)
+    return render(request, 'main/people.html', {
+        'people': people
+    })

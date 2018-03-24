@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% block title %}هم‌دوره‌ای‌ها{% endblock %}
+
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/people.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <div class="ui aligned center aligned grid">
+      <div class="container">
+        <div class="ui six doubling cards">
+            {% for p in people %}
+                <div class="card">
+                    <div class="image">
+                        <img src="/static/media/{{ p.profile_picture }}">
+                    </div>
+                    <div class="content">
+                        <div class="right floated author">
+                            <h4>{{ p.get_name }}</h4>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+
+    </script>
+{% endblock %}

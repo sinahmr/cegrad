@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'logout', views.logout, name='logout'),
     url(r'profile$', views.profile, name='profile'),
     url(r'profile/set$', views.set_profile, name='set_profile'),
-    url(r'', views.index, name='home')
+    url(r'people$', views.people, name='peoples'),
+    url(r'$', views.index, name='home')
 ]
