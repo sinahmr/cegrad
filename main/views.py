@@ -7,8 +7,6 @@ from django.urls import reverse
 from main.models import *
 
 
-# TODO check hidden fields and security
-
 @login_required
 def question(request):
     voter = get_object_or_404(UserProfile, user=request.user)
