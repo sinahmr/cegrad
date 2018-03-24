@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.rtlcss.com/semantic-ui/2.2.6/semantic.rtl.css"
           integrity="sha384-h/tGiTStmgbDQyTAdp2s5BfyXn7wmnFsn3vDaCPYck9YKkOuLAdjHi6y154TBVJ4" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/style.css' %}"/>
+    {% block style %}{% endblock %}
 </head>
 
 <body>
@@ -24,16 +25,11 @@
           <i class="content icon"></i>
             <i class="dropdown icon"></i>
             <div class="menu">
-                  <a class="item" href="{% url 'question' %}">
-      رای دادن
-    </a>
-    <a class="item" href="{% url 'opinions' %}">
-      نظر درباره‌ی دوران دانشجویی
-    </a>
-    <a class="item" href="{% url 'comments' %}">
-      نظر به دوستان
-    </a>
-    <div class="divider"></div>
+                <a class="item" href="{% url 'question' %}">رای دادن</a>
+                <a class="item" href="{% url 'opinions' %}">نظر درباره‌ی دوران دانشجویی</a>
+                <a class="item" href="{% url 'comments' %}">نظر به دوستان</a>
+                <a class="item" href="{% url 'logout' %}">خروج</a>
+            <div class="divider"></div>
     <a class="item">
         {% if request.user.userprofile.profile_picture %}
         <img src="/static/media/{{ request.user.userprofile.profile_picture }}" class="ui mini rounded image">
@@ -59,15 +55,10 @@
             {{ request.user.userprofile.get_name }}
         </h4>
     </a>
-    <a class="item" href="{% url 'question' %}">
-      رای دادن
-    </a>
-    <a class="item" href="{% url 'opinions' %}">
-      نظر درباره‌ی دوران دانشجویی
-    </a>
-    <a class="item" href="{% url 'comments' %}">
-      نظر به دوستان
-    </a>
+    <a class="item" href="{% url 'question' %}">رای دادن</a>
+    <a class="item" href="{% url 'opinions' %}">نظر درباره‌ی دوران دانشجویی</a>
+    <a class="item" href="{% url 'comments' %}">نظر به دوستان</a>
+    <a class="item" href="{% url 'logout' %}">خروج</a>
 </div>
 <div class="pusher">
     {% block content %}{% endblock %}

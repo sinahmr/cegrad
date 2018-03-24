@@ -1,9 +1,12 @@
-from random import choice
-from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
 from django.http import HttpResponseRedirect, HttpResponseBadRequest
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, redirect
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+from django.db import IntegrityError
 from django.urls import reverse
+from random import choice
 from main.models import *
 
 
@@ -134,3 +137,57 @@ def opinions(request):
 
 def index(request):
     return render(request, 'main/index.html', {})
+
+
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'main/login.html', {})
+    else:
+        return render(request, 'main/login.html', {})
+
+
+@login_required
+def logout(request):
+    auth_logout(request)
+    return redirect('/login')
+
+
+@login_required
+def profile(request):
+    user = get_object_or_404(UserProfile, user=request.user)
+    return render(request, 'main/profile.html', {
+        'firstname': user.user.first_name,
+        'lastname': user.user.last_name
+    })
+
+
+@login_required
+def set_profile(request):
+    user = get_object_or_404(UserProfile, user=request.user)
+    if request.method == "POST":
+        firstName = request.POST.get('first-name')
+        lastName = request.POST.get('last-name')
+        user.user.first_name = firstName
+        user.user.last_name = lastName
+        user.save()
+    if request.method == 'POST' and request.FILES['profile-photo']:
+        myfile = request.FILES['profile-photo']
+        ext = myfile.name.split('.')[-1]
+        name = '{}.{}'.format(str(user.user.username), ext)
+        name = os.path.join('profiles', name)
+        path = settings.MEDIA_ROOT + '/' + name
+        if os.path.isfile(path):
+            os.remove(path)
+        fs = FileSystemStorage()
+        filename = fs.save(name, myfile)
+        # uploaded_file_url = fs.url(filename)
+        user.profile_picture = name
+        user.save()
+    return redirect('/profile')

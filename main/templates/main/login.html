@@ -1,0 +1,46 @@
+{% extends 'main/base.html' %}
+{% block title %}ورود{% endblock %}
+
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/login.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal header">
+      <div class="content">وارد صفحه خود شوید!</div>
+    </h2>
+    <form class="ui large form" action="/login" method="post">
+    {% csrf_token %}
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="Username">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <input class="ui fluid large teal submit button" type="submit" value="ورود">
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+
+    <div class="ui message">
+      <a href="#">رمز عبور را فراموش کرده ام</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+

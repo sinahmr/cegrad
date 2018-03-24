@@ -3,4 +3,4 @@ db.sqlite3
 env
 **/__pycache__/
 *.py[cod]
-main/static/media
+main/static/media/profiles

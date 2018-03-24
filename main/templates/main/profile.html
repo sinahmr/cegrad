@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% block title %}ورود{% endblock %}
+
+{% block style %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/css/profile.css' %}"/>
+{% endblock %}
+
+{% block content %}
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <form class="ui large form" action="/profile/set" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        <div class="fields">
+            <div class="four wide field">
+                <input type="file" id="file" name="profile-photo" >
+            </div>
+            <div>
+                <div class="ui special cards">
+                  <div class="card">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button" id="setprofilephoto">Set Profile Photo</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img class="medium ui image" src="/static/media/{{ request.user.userprofile.profile_picture }}">
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="inline fields">
+            <label class="four wide field">نام</label>
+            <input type="text" name="first-name" placeholder="نام" value="{{ firstname }}">
+        </div>
+        <div class="inline fields">
+            <label class="four wide field">نام خانوادگی</label>
+            <input  type="text" name="last-name" placeholder="نام خانوادگی" value="{{ lastname }}">
+        </div>
+        <input class="ui fluid large teal submit button" type="submit" value="ثبت">
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+    <script>
+        $('.special.cards .image').dimmer({
+            on: 'hover'
+        });
+        $("#setprofilephoto").on("click", function() {
+            $("input#file").trigger("click");
+        });
+    </script>
+{% endblock %}
