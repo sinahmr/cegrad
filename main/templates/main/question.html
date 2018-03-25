@@ -3,7 +3,7 @@
 
 {% block title %}ترین‌ها{% endblock %}
 {% block content %}
-    <div class="ui two column grid centered">
+    <div class="ui two column stackable grid centered">
         <div class="column">
             <h1>
                 ثبت نظر در ترین‌ها
@@ -20,13 +20,11 @@
             {% if not question %}
                 <div>تموم شد :دی</div>
             {% else %}
-                <div>
-                    <div>{{ question.text }}</div>
-                </div>
                 <form method="post" class="ui form">
                     {% csrf_token %}
                     <input type="hidden" name="question_id" value="{{ question.id }}" />
-                    <div class="field">
+                    <div class="required field">
+                        <label>{{ question.text }}</label>
                         <div class="ui fluid search selection dropdown">
                           <input type="hidden" name="candidate">
                           <i class="dropdown icon"></i>
@@ -64,6 +62,13 @@
                 success: 'خسته نباشی!'
             }
         });
+        $('.ui.form')
+          .form({
+            fields: {
+              candidate: 'empty',
+            }
+          })
+        ;
     });
 </script>
 {% endblock %}

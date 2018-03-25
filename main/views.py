@@ -69,7 +69,12 @@ def comment(request):
             if not c:
                 return HttpResponseBadRequest('You cannot access this comment')
         else:
-            c = None
+            to = request.GET.get('to')
+            if to:
+                to_profile = get_object_or_404(UserProfile, user__username=to)
+                c = Comment(target=to_profile)
+            else:
+                c = None
         candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(
             user__username=commenter.user.username)
         return render(request, 'main/thought.html', {
@@ -147,8 +152,12 @@ def login(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            next = request.GET.get('next')
             auth_login(request, user)
-            return redirect('/')
+            if next:
+                return redirect(next)
+            else:
+                return redirect('/')
         else:
             return render(request, 'main/login.html', {})
     else:

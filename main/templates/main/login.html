@@ -8,13 +8,13 @@
 
 {% block content %}
 
-<div class="ui middle aligned center aligned grid">
+<div class="ui middle aligned center aligned stackable grid">
   <div class="column">
     <h2 class="ui teal header">
       <div class="content">{{ request.user.is_authenticated|yesno:'وارد شده اید!,وارد صفحه خود شوید!'}}</div>
     </h2>
     {% if not request.user.is_authenticated %}
-    <form class="ui large form" action="/login" method="post">
+    <form class="ui large form" action="{{ request.get_full_path }}" method="post">
     {% csrf_token %}
       <div class="ui stacked segment">
         <div class="field">

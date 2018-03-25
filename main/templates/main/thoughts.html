@@ -3,7 +3,7 @@
 
 {% block title %}نظرات تو{% endblock %}
 {% block content %}
-<div class="ui two column grid centered">
+<div class="ui two column stackable grid centered">
     <div class="column">
         {% if type == 'comment' %}
         <h1>
@@ -16,7 +16,7 @@
                 {% if item.target.profile_picture %}
                 <img src="/static/media/{{ item.target.profile_picture }}" class="ui mini rounded image">
                 {% else %}
-                <i class="smile outline icon"></i>
+                <img src="/static/media/default-profile-picture.jpg" class="ui mini rounded image">
                 {% endif %}
             </div>
             <div class="middle aligned content">

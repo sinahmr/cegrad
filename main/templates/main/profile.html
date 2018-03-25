@@ -4,15 +4,18 @@
 {% block style %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/profile.css' %}"/>
+<style>
+
+</style>
 {% endblock %}
 
 {% block content %}
 
-<div class="ui middle aligned center aligned grid">
+<div class="ui middle aligned center aligned stackable grid">
   <div class="column">
     <form class="ui large form" action="/profile/set" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-        <div class="fields ui grid">
+        <div class="fields ui middle aligned grid">
             <div class="ui row">
             <div class="four wide column field">
                 <label class="four wide column centered">عکس پروفایل</label>
@@ -40,13 +43,13 @@
                 </div>
             </div>
         </div>
-        <div class="fields ui grid">
+        <div class="fields ui middle aligned grid">
             <div class="ui row inline field">
                 <label class="four wide column centered">نام</label>
                 <input class="twelve wide column" type="text" name="first-name" placeholder="نام" value="{{ firstname }}">
             </div>
         </div>
-        <div class="fields ui grid">
+        <div class="fields ui middle aligned grid">
             <div class="ui row inline field">
                 <label class="four wide column centered">نام خانوادگی</label>
                 <input class="twelve wide column" type="text" name="last-name" placeholder="نام خانوادگی" value="{{ lastname }}">

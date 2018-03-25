@@ -2,7 +2,7 @@
 
 {% block title %}نظردهی{% endblock %}
 {% block content %}
-    <div class="ui two column grid centered">
+    <div class="ui two column stackable grid centered">
         <div class="column">
             {% if type == 'comment' %}
             <h1>
@@ -17,7 +17,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ item.id }}" />
                 {% if type == 'comment' %}
-                <div class="field">
+                <div class="required field">
                     <label>به</label>
                     <div class="ui fluid search selection dropdown">
                         <input type="hidden" name="candidate" required>
@@ -40,12 +40,12 @@
                     </div>
                 </div>
                 {% else %}
-                <div class="field">
+                <div class="required field">
                     <label>موضوع</label>
                     <div><input type="text" name="subject" value="{{ item.subject }}" required></div>
                 </div>
                 {% endif %}
-                <div class="field">
+                <div class="required field">
                     <label>نظر من</label>
                     <textarea name="text">{{ item.text }}</textarea>
                 </div>
@@ -59,6 +59,18 @@
 <script>
     $( document ).ready(function () {
         $('.ui.dropdown').dropdown('set selected', '{{ item.target.user.username }}');
+        $('.ui.form')
+          .form({
+            fields: {
+              {% if type == 'comment' %}
+              candidate: 'empty',
+              {% else %}
+              subject  : 'empty',
+              {% endif %}
+              text     : 'empty',
+            }
+          })
+        ;
     });
 </script>
 {% endblock %}

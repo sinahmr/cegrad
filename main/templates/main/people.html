@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="ui aligned center aligned grid">
+    <div class="ui center aligned stackable grid">
       <div class="container">
           <h1>{{ request.user.is_authenticated|yesno:'هم‌دوره‌ای‌ها,دانشجویان ورودی ۹۳ دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف'}}</h1>
         <div class="ui six doubling cards">
@@ -23,10 +23,18 @@
                         {% endif %}
                     </div>
                     <div class="content">
-                        <div class="right floated author">
+                        <div class="author">
                             <h4>{{ p.get_name }}</h4>
                         </div>
                     </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="extra content">
+                        <a href="{% url 'comment' %}?to={{ p.user.username }}">
+                          <i class="pencil alternate icon"></i>
+                            ارسال نظر
+                        </a>
+                    </div>
+                    {% endif %}
                 </div>
             {% endfor %}
         </div>
