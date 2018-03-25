@@ -8,6 +8,9 @@
         {% if type == 'comment' %}
         <h1>
             نظرهای من درباره‌ی دوستان
+            <div class="ui icon button" data-content="متنایی که برای دوستامون می‌نویسیم قراره توی دفترچه یادگاری چاپ بشه!" data-position="bottom left">
+              <i class="question outline icon"></i>
+            </div>
         </h1>
         <div class="ui divided items">
             {% for item in items %}
@@ -38,6 +41,9 @@
         {% else %}
         <h1>
             نظرهای من درباره‌ی دوران دانشجویی
+            <div class="ui icon button" data-content="یه متن درباره‌ی دوران دانشجویی بنویس! این متن توی صفحه‌ی خودت توی دفترچه‌ی یادگاری‌ دوره چاپ می‌شه." data-position="bottom left">
+              <i class="question outline icon"></i>
+            </div>
         </h1>
         <div class="ui divided items">
             {% for item in items %}
@@ -69,4 +75,13 @@
             </div>
     </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+$(document).ready(function(){
+    $('.icon.button')
+      .popup()
+    ;
+});
+</script>
 {% endblock %}
