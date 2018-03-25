@@ -12,34 +12,45 @@
   <div class="column">
     <form class="ui large form" action="/profile/set" method="post" enctype="multipart/form-data">
     {% csrf_token %}
-        <div class="fields">
-            <div class="four wide field">
+        <div class="fields ui grid">
+            <div class="ui row">
+            <div class="four wide column field">
+                <label class="four wide column centered">عکس پروفایل</label>
                 <input type="file" id="file" name="profile-photo" >
             </div>
-            <div>
-                <div class="ui special cards">
-                  <div class="card">
-                    <div class="blurring dimmable image">
-                        <div class="ui dimmer">
-                            <div class="content">
-                                <div class="center">
-                                    <div class="ui inverted button" id="setprofilephoto">Set Profile Photo</div>
-                                </div>
+                <div class="twelve wide column field">
+                    <div class="ui special cards">
+              <div class="ui card">
+                <div class="blurring dimmable image">
+                    <div class="ui dimmer">
+                        <div class="content">
+                            <div class="center">
+                                <div class="ui inverted button" id="setprofilephoto">بارگذاری عکس پروفایل</div>
                             </div>
                         </div>
-                        <img id="profileimg" class="medium ui image" src="/static/media/{{ request.user.userprofile.profile_picture }}">
                     </div>
+                    {% if request.user.userprofile.profile_picture %}
+                    <img id="profileimg" class="medium ui image" src="/static/media/{{ request.user.userprofile.profile_picture }}">
+                    {% else %}
+                    <img id="profileimg" class="medium ui image" src="/static/media/default-profile-picture.jpg">
+                    {% endif %}
+                </div>
                   </div>
+              </div>
                 </div>
             </div>
         </div>
-        <div class="inline fields">
-            <label class="four wide field">نام</label>
-            <input type="text" name="first-name" placeholder="نام" value="{{ firstname }}">
+        <div class="fields ui grid">
+            <div class="ui row inline field">
+                <label class="four wide column centered">نام</label>
+                <input class="twelve wide column" type="text" name="first-name" placeholder="نام" value="{{ firstname }}">
+            </div>
         </div>
-        <div class="inline fields">
-            <label class="four wide field">نام خانوادگی</label>
-            <input  type="text" name="last-name" placeholder="نام خانوادگی" value="{{ lastname }}">
+        <div class="fields ui grid">
+            <div class="ui row inline field">
+                <label class="four wide column centered">نام خانوادگی</label>
+                <input class="twelve wide column" type="text" name="last-name" placeholder="نام خانوادگی" value="{{ lastname }}">
+            </div>
         </div>
         <input class="ui fluid large teal submit button" type="submit" value="ثبت">
     </form>

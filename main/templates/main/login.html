@@ -11,21 +11,22 @@
 <div class="ui middle aligned center aligned grid">
   <div class="column">
     <h2 class="ui teal header">
-      <div class="content">وارد صفحه خود شوید!</div>
+      <div class="content">{{ request.user.is_authenticated|yesno:'وارد شده اید!,وارد صفحه خود شوید!'}}</div>
     </h2>
+    {% if not request.user.is_authenticated %}
     <form class="ui large form" action="/login" method="post">
     {% csrf_token %}
       <div class="ui stacked segment">
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="username" placeholder="نام کاربری">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Password">
+            <input type="password" name="password" placeholder="گذرواژه">
           </div>
         </div>
         <input class="ui fluid large teal submit button" type="submit" value="ورود">
@@ -36,8 +37,9 @@
     </form>
 
     <div class="ui message">
-      <a href="#">رمز عبور را فراموش کرده ام</a>
+      <a href="#">رمز عبور را فراموش کرده‌ام</a>
     </div>
+    {% endif %}
   </div>
 </div>
 
