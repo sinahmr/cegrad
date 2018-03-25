@@ -116,7 +116,11 @@ body {
     <a  href="#home" class="active item">خانه</a>
     <div class="right menu">
       <div class="item">
+        {% if request.user.is_authenticated %}
+        <a class="ui button" href="{% url 'profile' %}">پنل کاربری</a>
+        {% else %}
         <a class="ui button" href="{% url 'login' %}">ورود</a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -163,7 +167,7 @@ body {
           <p>برای دوستات بنویس!</p>
         </div>
         <div class="six wide right floated column">
-          <img src="assets/images/wireframe/white-image.png" class="ui large bordered rounded image">
+          <img src="/static/media/ce.jpg" class="ui large bordered rounded image">
         </div>
       </div>
     </div>
