@@ -5,15 +5,6 @@ body > .grid {
     height: 100%;
 }
 
-.container{
-    padding: 1rem 3rem !important;
-}
-
-.content {
-    margin-top: 5em;
-    margin-bottom: 1em;
-}
-
 input#file{
     display: none;
 }

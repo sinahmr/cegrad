@@ -27,7 +27,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img class="medium ui image" src="/static/media/{{ request.user.userprofile.profile_picture }}">
+                        <img id="profileimg" class="medium ui image" src="/static/media/{{ request.user.userprofile.profile_picture }}">
                     </div>
                   </div>
                 </div>
@@ -50,11 +50,26 @@
 
 {% block script %}
     <script>
+        $(document).ready(function(){
         $('.special.cards .image').dimmer({
             on: 'hover'
         });
         $("#setprofilephoto").on("click", function() {
             $("input#file").trigger("click");
+        });
+        $("#file").change(function(e) {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (n) {
+                    $('#profileimg')
+                        .attr('src', n.target.result);
+                };
+
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
         });
     </script>
 {% endblock %}

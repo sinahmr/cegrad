@@ -1,0 +1,17 @@
+<div id="mfooter" class="ui inverted vertical footer segment {{ request.user.is_authenticated|yesno:'login,logout' }}">
+    <div class="ui container">
+        <div class="ui stackable inverted divided equal height stackable grid">
+            <div class="three wide column">
+                <h4 class="ui inverted header">درباره</h4>
+                <div class="ui inverted link list">
+                    <a href="#" class="item">دوره ۹۳</a>
+                    <a href="{% url 'people' %}" class="item">دانشجویان</a>
+                </div>
+            </div>
+            <div class="seven wide column">
+                <h4 class="ui inverted header"></h4>
+                <p>اینجا دوره‌ی ۹۳ است.</p>
+            </div>
+        </div>
+    </div>
+</div>

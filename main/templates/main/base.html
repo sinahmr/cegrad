@@ -14,13 +14,14 @@
 
 <body>
 
-<div id="menu" class="ui fixed inverted main menu">
+<div id="menu" class="ui large fixed inverted main menu {{ request.user.is_authenticated|yesno:'login,logout' }}">
     <div class="ui container">
         <a class="launch icon item" href="{% url 'home' %}">
-            <i class="home icon"></i>
+            خانه
         </a>
 
         <div class="right menu">
+            {% if request.user.is_authenticated %}
           <div class="ui dropdown item">
           <i class="content icon"></i>
             <i class="dropdown icon"></i>
@@ -28,6 +29,7 @@
                 <a class="item" href="{% url 'question' %}">رای دادن</a>
                 <a class="item" href="{% url 'opinions' %}">نظر درباره‌ی دوران دانشجویی</a>
                 <a class="item" href="{% url 'comments' %}">نظر به دوستان</a>
+                <a class="item" href="{% url 'people' %}">هم‌ دوره‌ای‌ها</a>
                 <a class="item" href="{% url 'logout' %}">خروج</a>
             <div class="divider"></div>
     <a class="item">
@@ -40,10 +42,16 @@
     </a>
             </div>
           </div>
+            {% else %}
+            <div class="item">
+                <a class="ui button inverted" href="{% url 'login' %}">ورود</a>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
 
+{% if request.user.is_authenticated %}
 <div id="mside" class="ui sidebar inverted vertical menu visible pushable">
     <a class="item">
         <h4 class="ui image">
@@ -58,28 +66,15 @@
     <a class="item" href="{% url 'question' %}">رای دادن</a>
     <a class="item" href="{% url 'opinions' %}">نظر درباره‌ی دوران دانشجویی</a>
     <a class="item" href="{% url 'comments' %}">نظر به دوستان</a>
+    <a class="item" href="{% url 'people' %}">هم‌ دوره‌ای‌ها</a>
     <a class="item" href="{% url 'logout' %}">خروج</a>
 </div>
-<div class="pusher">
+{% endif %}
+<div class="pusher {{ request.user.is_authenticated|yesno:'login,logout' }}">
     {% block content %}{% endblock %}
 </div>
 
-<div id="mfooter" class="ui inverted vertical footer segment">
-    <div class="ui container">
-        <div class="ui stackable inverted divided equal height stackable grid">
-            <div class="three wide column">
-                <h4 class="ui inverted header">درباره</h4>
-                <div class="ui inverted link list">
-                    <a href="#" class="item">دوره ۹۳</a>
-                </div>
-            </div>
-            <div class="seven wide column">
-                <h4 class="ui inverted header"></h4>
-                <p>اینجا دوره‌ی ۹۳ است.</p>
-            </div>
-        </div>
-    </div>
-</div>
+{% include 'main/footer.html' %}
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"
         integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>

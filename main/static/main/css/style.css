@@ -9,11 +9,11 @@ body {
     font-family: 'BYekan', Helvetica, Arial, sans-serif;
 }
 
-#menu {
+#menu.login {
     display: none;
 }
 
-.pusher {
+.pusher.login {
     margin-right: 15rem;
     padding-top: 2rem;
 }
@@ -29,9 +29,11 @@ body {
   position: relative; /* needed for footer positioning*/
   height: auto !important; /* real browsers */
   min-height: 100%; /* real browsers */
+  padding-top: 6rem;
+  margin-bottom: 1rem;
 }
 
-#mfooter {
+#mfooter.login {
   margin-right: 15rem;
   width: 100%;
   bottom: 0; /* stick to bottom */
@@ -46,12 +48,12 @@ body {
         display: none !important;
     }
 
-    .pusher {
+    .pusher.login {
         margin-right: 0rem;
-        padding-top: 5rem;
+        padding-top: 6rem;
     }
 
-    #mfooter {
+    #mfooter.login {
         margin-right: 0rem;
     }
 }

@@ -4,14 +4,7 @@ body {
 body > .grid {
   height: 100%;
 }
-.image {
-  margin-top: -100px;
-}
+
 .column {
   max-width: 450px;
-}
-
-.content {
-    margin-top: 5em;
-    margin-bottom: 1em;
 }

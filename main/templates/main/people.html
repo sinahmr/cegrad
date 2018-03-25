@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
-{% block title %}هم‌دوره‌ای‌ها{% endblock %}
+{% block title %}
+{{ request.user.is_authenticated|yesno:'هم‌دوره‌ای‌ها,دانشجویان ورودی ۹۳ دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف'}}
+{% endblock %}
 
 {% block style %}
     {% load static %}
@@ -9,11 +11,16 @@
 {% block content %}
     <div class="ui aligned center aligned grid">
       <div class="container">
+          <h1>{{ request.user.is_authenticated|yesno:'هم‌دوره‌ای‌ها,دانشجویان ورودی ۹۳ دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف'}}</h1>
         <div class="ui six doubling cards">
             {% for p in people %}
                 <div class="card">
                     <div class="image">
+                        {% if p.profile_picture %}
                         <img src="/static/media/{{ p.profile_picture }}">
+                        {% else %}
+                        <img src="/static/media/default-profile-picture.jpg">
+                        {% endif %}
                     </div>
                     <div class="content">
                         <div class="right floated author">
