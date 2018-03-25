@@ -9,75 +9,55 @@
         <h1>
             نظرهای من درباره‌ی دوستان
         </h1>
-        {% if items %}
-        <table class="ui very basic collapsing celled table">
-            <thead>
-            <tr>
-                <th>به</th>
-                <th>بخشی از متن</th>
-                <th>ویرایش</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="ui divided items">
             {% for item in items %}
-            <tr>
-                <td>
-                    <h4 class="ui image header">
-                        {% if item.target.profile_picture %}
-                        <img src="/static/media/{{ item.target.profile_picture }}" class="ui mini rounded image">
-                        {% else %}
-                        <i class="smile outline icon"></i>
-                        {% endif %}
-                        {{ item.target.get_name }}
-                    </h4>
-                </td>
-                <td>
-                    {{ item.text|truncatechars:30 }}
-                </td>
-                <td>
-                    <a href="{{ item.url }}">
-                    <i class="pencil alternative icon"></i>
-                    </a>
-                </td>
-            </tr>
+          <div class="item">
+            <div class="image">
+                {% if item.target.profile_picture %}
+                <img src="/static/media/{{ item.target.profile_picture }}" class="ui mini rounded image">
+                {% else %}
+                <i class="smile outline icon"></i>
+                {% endif %}
+            </div>
+            <div class="middle aligned content">
+              <a class="header">{{ item.target.get_name }}</a>
+              <div class="description">
+                {{ item.text }}
+              </div>
+              <div class="extra">
+                <a href="{{ item.url }}" class="ui right floated button">
+                  ویرایش
+                </a>
+              </div>
+            </div>
+          </div>
+            {% empty %}
+            <h4>هنوز برای کسی نظر نگذاشته‌ای...</h4>
             {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <h3>
-        هنوز برای کسی نظر نگذاشته‌ای...
-        </h3>
-        {% endif %}
+        </div>
         {% else %}
         <h1>
             نظرهای من درباره‌ی دوران دانشجویی
         </h1>
-        {% if items %}
-        <table class="ui very basic collapsing celled table">
-            <thead>
-            <tr>
-                <th>موضوع</th>
-                <th>بخشی از متن</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="ui divided items">
             {% for item in items %}
-            <tr>
-                <td>
-                    {{ item.subject }}
-                </td>
-                <td>
-                    {{ item.text|truncatechars:30 }}
-                </td>
-            </tr>
+          <div class="item">
+            <div class="middle aligned content">
+              <a class="header">{{ item.subject }}</a>
+              <div class="description">
+                {{ item.text }}
+              </div>
+              <div class="extra">
+                <a href="{{ item.url }}" class="ui right floated button">
+                  ویرایش
+                </a>
+              </div>
+            </div>
+          </div>
+            {% empty %}
+            <h4>هنوز نظری رو ثبت نکرده‌ای...</h4>
             {% endfor %}
-            </tbody>
-        </table>
-        {% else %}
-        <h3>
-        هنوز نظری رو ثبت نکرده‌ای...
-        </h3>
-        {% endif %}
+            </div>
         {% endif %}
 
             <div>
