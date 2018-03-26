@@ -19,5 +19,8 @@ class Command(BaseCommand):
                 last_name = line[2]
                 user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                                                 email=email, is_staff=True, password='1')
-                UserProfile.objects.create(user=user, profile_picture='default.png')
+                if len(line) > 3 and line[3] == 'f':
+                    UserProfile.objects.create(user=user, profile_picture='default-female.png')
+                else:
+                    UserProfile.objects.create(user=user, profile_picture='default-male.png')
         print('OK')
