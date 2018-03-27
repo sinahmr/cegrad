@@ -12,9 +12,14 @@ def image_path(instance, filename):
     return os.path.join('profiles', name)
 
 
+class AboutComment(models.Model):
+    text = models.CharField(max_length=202)
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(max_length=100, storage=OverwriteStorage(), upload_to=image_path, blank=True)
+    about_comment = models.OneToOneField(AboutComment, on_delete=models.SET_NULL, blank=True, null=True, related_name="userprofile")
 
     def get_name(self):
         if self.user.first_name or self.user.last_name:

@@ -27,5 +27,7 @@ urlpatterns = [
     url(r'profile$', views.profile, name='profile'),
     url(r'profile/set$', views.set_profile, name='set_profile'),
     url(r'people$', views.people, name='people'),
+    url(r'about/delete$', views.delete_about, name='delete_about'),
+    url(r'about$', views.about, name='about'),
     url(r'$', views.index, name='home')
 ]

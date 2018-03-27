@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% block title %}درباره{% endblock %}
+
+{% block content %}
+<div class="ui container">
+  <div class="ui comments">
+    <h1 class="ui dividing header">دوره‌ی ۹۳ کامپیوتر به روایت خودمان</h1>
+    {% for comment in about_comments %}
+    <div class="comment">
+      <a class="avatar">
+        {% if comment.userprofile.profile_picture %}
+        <img src="/static/media/{{ comment.userprofile.profile_picture }}" class="ui mini rounded image">
+        {% else %}
+        <img src="/static/media/default-profile-picture.jpg" class="ui mini rounded image">
+        {% endif %}
+      </a>
+      <div class="content">
+        <a class="author">{{ comment.userprofile.get_name }}</a>
+        <div class="text">
+          {{ comment.text }}
+        </div>
+
+        <div class="actions">
+          <a class="reply">-</a>
+          {% if request.user.userprofile == comment.userprofile %}
+          <a class="reply" href="{% url 'about' %}/delete">حذف</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% if request.user.is_authenticated and not request.user.userprofile.about_comment %}
+    <h4>تو دوره‌مون رو توی ۲۰۰ کارکتر چطوری توصیف می‌کنی؟</h4>
+    <form class="ui reply form" method="post">
+      {% csrf_token %}
+      <div class="field">
+        <textarea name="text"></textarea>
+      </div>
+      <input class="ui button primary" type="submit" value="ارسال"/>
+    </form>
+    {% endif %}
+</div>
+</div>
+
+{% endblock %}
+
+

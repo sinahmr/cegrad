@@ -213,3 +213,32 @@ def people(request):
     return render(request, 'main/people.html', {
         'people': people
     })
+
+
+def about(request):
+    if request.method == "POST":
+        print('start')
+        commenter = get_object_or_404(UserProfile, user=request.user)
+        text = request.POST.get('text')
+        print(commenter.about_comment)
+        if commenter.about_comment:
+            commenter.about_comment.text = text
+            commenter.about_comment.save()
+        else:
+            print('here!')
+            comment = AboutComment.objects.create(text=text)
+            commenter.about_comment = comment
+            commenter.save()
+        return redirect('about')
+    about_comments = AboutComment.objects.all()
+    return render(request, 'main/about.html', {
+        'about_comments': about_comments
+    })
+
+
+@login_required
+def delete_about(request):
+    commenter = get_object_or_404(UserProfile, user=request.user)
+    if commenter.about_comment:
+        commenter.about_comment.delete()
+    return redirect('about')

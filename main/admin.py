@@ -40,7 +40,16 @@ class CommentAdmin(admin.ModelAdmin):
         return obj.target.get_name()
 
 
+class AboutCommentAdmin(admin.ModelAdmin):
+    fields = ['userprofile', 'text']
+    list_display = ['userprofile_get_name', 'text']
+
+    def userprofile_get_name(self, obj):
+        return obj.userprofile.get_name()
+
+
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(TheMost, TheMostAdmin)
 admin.site.register(Vote, VoteAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(AboutComment, AboutCommentAdmin)
