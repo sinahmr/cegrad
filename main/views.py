@@ -51,7 +51,7 @@ def comment(request):
         text = request.POST.get('text')
 
         comment_id = request.POST.get('id')
-        if comment_id:
+        if comment_id != 'None' and comment_id:
             c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
             if not c:
                 return HttpResponseBadRequest('You cannot access this comment')
