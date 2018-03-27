@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = 'Add users'
 
     def handle(self, *args, **options):
-        with open('users.csv') as file:
+        with open('users.csv', encoding="utf8") as file:
             reader = csv.reader(file, delimiter=',')
             for line in reader:
                 username = line[0]
