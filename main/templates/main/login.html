@@ -11,8 +11,12 @@
 <div class="ui middle aligned center aligned stackable grid">
   <div class="column">
     <h2 class="ui teal header">
-      <div class="content">{{ request.user.is_authenticated|yesno:'وارد شده اید!,وارد صفحه خود شوید!'}}</div>
+      <div class="content">{{ request.user.is_authenticated|yesno:'وارد شده اید!,وارد صفحه خود شوید!'}}
+      </div>
     </h2>
+    <div class="ui icon button primary" data-content="نام کاربری و گذرواژه به رایانامه‌ی ce ایت باید اومده باشه، اگه هر مشکلی بود یا ایمیل ce نداری از راهایی که تو تماس‌باما گفتیم بهمون بگو." data-position="bottom left">
+        <i class="question outline icon"></i>
+    </div>
     {% if not request.user.is_authenticated %}
     <form class="ui large form" action="{{ request.get_full_path }}" method="post">
     {% csrf_token %}
@@ -46,3 +50,12 @@
 {% endblock %}
 
 
+{% block script %}
+<script>
+  $(document).ready(function(){
+    $('.icon.button')
+      .popup()
+    ;
+  });
+</script>
+{% endblock %}
