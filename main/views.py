@@ -6,7 +6,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.db import IntegrityError
 from django.urls import reverse
-from random import choice
+from random import choice, randint
 from main.models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -205,11 +205,12 @@ def set_profile(request):
             user = get_object_or_404(UserProfile, user=request.user)
             myfile = request.FILES['profile-photo']
             ext = myfile.name.split('.')[-1]
-            name = '{}.{}'.format(str(user.user.username), ext)
+            name = '{}-{}.{}'.format(str(user.user.username), randint(0, 100000), ext)
             name = os.path.join('profiles', name)
             path = settings.MEDIA_ROOT + '/' + name
-            if os.path.isfile(path):
-                os.remove(path)
+            old_path = settings.BASE_DIR + '/' + user.profile_picture.url
+            if os.path.isfile(old_path):
+                os.remove(old_path)
             crop_info = request.POST.get('crop')
             crop_info = crop_info.split(',')
             im = Image.open(request.FILES['profile-photo'])
@@ -223,7 +224,7 @@ def set_profile(request):
             user.save()
     except KeyError:
         pass
-    return redirect('/profile')
+    return redirect('profile')
 
 
 def people(request):
