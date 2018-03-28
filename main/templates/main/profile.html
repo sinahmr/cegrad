@@ -4,6 +4,7 @@
 {% block style %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'main/css/profile.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'main/cropper/cropper.min.css' %}"/>
 <style>
 
 </style>
@@ -11,10 +12,11 @@
 
 {% block content %}
 
-<div class="ui middle aligned center aligned stackable grid">
+<div class="ui middle aligned center aligned three column stackable grid">
   <div class="column">
     <form class="ui large form" action="/profile/set" method="post" enctype="multipart/form-data">
     {% csrf_token %}
+        <input type="hidden" id="crop-info" name="crop" >
         <div class="fields ui middle aligned grid">
             <div class="ui row">
             <div class="four wide column field">
@@ -23,7 +25,7 @@
             </div>
                 <div class="twelve wide column field">
                     <div class="ui special cards">
-              <div class="ui card">
+              <div class="ui card fluid">
                 <div class="blurring dimmable image">
                     <div class="ui dimmer">
                         <div class="content">
@@ -59,10 +61,33 @@
     </form>
   </div>
 </div>
+<div class="ui modal">
+  <i class="close icon"></i>
+  <div class="header">
+    برش عکس
+  </div>
+  <div class="content">
+    <div class="description">
+      <div class="ui header">یه بخش مربعی از عکس انتخاب کن</div>
+        <img id="modalimg" src="{% static 'media/default-male.png' %}" />
+    </div>
+
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      بیخیال!
+    </div>
+    <div class="ui positive right labeled icon button">
+      خوب شد!
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 
 {% block script %}
+    <script src="{% static 'main/cropper/cropper.min.js' %}"></script>
     <script>
         $(document).ready(function(){
         $('.special.cards .image').dimmer({
@@ -76,14 +101,39 @@
                 var reader = new FileReader();
 
                 reader.onload = function (n) {
+
+                    $('#modalimg')
+                        .attr('src', n.target.result);
+                    $('.ui.modal')
+                      .modal('show')
+                    ;
+                    var image = document.getElementById('modalimg');
+                    var cropper = new Cropper(image, {
+                      aspectRatio: 1 / 1,
+                      viewMode: 1,
+                      crop: function(event) {
+                      $('#crop-info').val(event.detail.x + ',' + event.detail.y + ',' + event.detail.width
+                                                                + ',' + event.detail.height
+                      );
+                      }
+                    });
+
+                    /*
                     $('#profileimg')
                         .attr('src', n.target.result);
+                    */
                 };
 
                 reader.readAsDataURL(this.files[0]);
             }
         });
-
+        $('.positive.button').click(function(){
+            $('.form').submit();
+        });
+        $('.deny.button').click(function(){
+            $('#file').val('');
+            $('#crop-info').val('');
+        });
         });
     </script>
 {% endblock %}

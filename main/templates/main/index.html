@@ -132,6 +132,13 @@ body {
   <div class="ui inverted vertical masthead center aligned segment">
     <div class="ui container">
       <div class="ui large secondary inverted pointing menu">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="item">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         <div class="right item">
           {% if request.user.is_authenticated %}
           <a class="ui inverted button" href="{% url 'profile' %}">پنل کاربری</a>
@@ -159,15 +166,60 @@ body {
     <div class="ui middle aligned stackable grid container">
       <div class="row">
         <div class="eight wide column">
-          <h3 class="ui header">ترین‌ها</h3>
-          <p>بهتری، باحال‌ترین و کلن ترین‌های دوره کیان؟</p>
-          <h3 class="ui header">دانشجویی در سه پاراگراف</h3>
-          <p>اگه بخوای یه متن از دوران دانشجوییت به یادگار بذاری</p>
-          <h3 class="ui header">نظر به</h3>
-          <p>برای دوستات بنویس!</p>
+          <h3 class="ui header">دفترچه یادگاری</h3>
+          <p align="justify">
+            نزدیک به چهارسال از اولین روزی که قدم در این دانشگاه گذاشتیم گذشته است. ۴سال پرخاطره و به یادماندنی. ۴سالی که بعد‌ها خیلی از آن یادخواهیم کرد. به همین خاطر تصمیم گرفتیم تا دفترچه خاطراتی جمع‌آوری کنیم به امید آنکه در آینده با تورق آن لبخندی هرچند کوتاه بر لبان خواننده بنشیند.
+            </p>
+          <p align="justify">
+و اما محتویات این دفترچه چیست؟ هر یک از شما عزیزان یک متن یادگاری به همراه یک عکس از خودتون از طریق این سامانه برایمان می‌فرستید که این متن در مورد خودتان و دوران دانشجویی‌تان خواهد بود.
+همچنین می‌تونید برای هر کدام از دوستاتون متنی کوتاه بنویسید.
+            </p>
+          <p align="justify">
+در آخر هر شخص یک صفحه توی این دفترچه داره که شامل عکسش، متن‌خودش و متن‌هایی که دوستاش براش نوشتن می‌شه.
+          </p>
+          <p align="justify">
+فقط با مشارکت شماست که این اتفاق میافته. پس لطفا دوستاتون و بعدنا‌ی خودتون رو خوشحال کنید و متن‌های قشنگتون رو برامون بفرستید.
+          </p>
         </div>
         <div class="six wide right floated column">
           <img src="/static/media/ce.jpg" class="ui large bordered rounded image">
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical stripe quote segment">
+    <div class="ui equal width stackable internally celled grid">
+      <div class="center aligned row">
+        <div class="column">
+          <h3>ترین‌ها</h3>
+          <p>ترین‌های دوره رو انتخاب کن</p>
+          {% if request.user.is_authenticated %}
+          <a class="ui button" href="{% url 'question' %}">برو</a>
+          {% endif %}
+        </div>
+        <div class="column">
+          <h3>متن یادگاری خودت</h3>
+          <p>
+            متن یادگاری برای خودت رو بنویس
+          </p>
+          {% if request.user.is_authenticated %}
+          <a class="ui button" href="{% url 'opinions' %}">برو</a>
+          {% endif %}
+        </div>
+        <div class="column">
+          <h3>متن برای دوستات</h3>
+          <p>
+            برای دوستات متن بنویس و خوشحالشون کن
+          </p>
+          {% if request.user.is_authenticated %}
+          <a class="ui button" href="{% url 'comments' %}">برو</a>
+          {% endif %}
         </div>
       </div>
     </div>

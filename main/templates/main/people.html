@@ -29,10 +29,17 @@
                     </div>
                     {% if request.user.is_authenticated %}
                     <div class="extra content">
+                        {% if request.user != p.user %}
                         <a href="{% url 'comment' %}?to={{ p.user.username }}">
                           <i class="pencil alternate icon"></i>
                             ارسال نظر
                         </a>
+                        {% else %}
+                        <a href="{% url 'opinion' %}">
+                          <i class="pencil alternate icon"></i>
+                            ثبت متن
+                        </a>
+                        {% endif %}
                     </div>
                     {% endif %}
                 </div>

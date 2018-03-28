@@ -7,6 +7,9 @@
         <div class="column">
             <h1>
                 ثبت نظر در ترین‌ها
+                <div class="ui icon button" data-content="ترین‌های دوره رو انتخاب کن! دقت کن رای‌ها قابل ویرایش نیستن! اگه یه سوالی رو الان نمی‌خوای جواب بدی می‌تونی صفحه رو بازفراخوانی کنی تا یه سوال تصادفی دیگه برات بیاد!" data-position="bottom left">
+                  <i class="question outline icon"></i>
+                </div>
             </h1>
             <div class="ui indicating progress" id="q-progress"
                  data-value="{{ voted_count }}"
@@ -68,6 +71,9 @@
               candidate: 'empty',
             }
           })
+        ;
+        $('.icon.button')
+          .popup()
         ;
     });
 </script>

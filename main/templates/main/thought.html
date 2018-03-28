@@ -1,18 +1,22 @@
 {% extends 'main/base.html' %}
 
-{% block title %}نظردهی{% endblock %}
+{% block title %}
+{% if type == 'comment' %}
+                ارسال نظر
+{% else %}
+    ثبت متن
+{% endif %}
+{% endblock %}
 {% block content %}
     <div class="ui two column stackable grid centered">
         <div class="column">
+            <h1>
             {% if type == 'comment' %}
-            <h1>
                 ارسال نظر
-            </h1>
             {% else %}
-            <h1>
-                ثبت نظر
-            </h1>
+                ثبت متن
             {% endif %}
+            </h1>
             <form method="post" class="ui form">
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ item.id }}" />

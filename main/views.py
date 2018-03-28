@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
@@ -9,7 +9,8 @@ from django.urls import reverse
 from random import choice
 from main.models import *
 from django.contrib.auth.models import User
-
+from django.contrib import messages
+from PIL import Image
 
 @login_required
 def question(request):
@@ -17,12 +18,14 @@ def question(request):
     if request.method == 'POST':
         candidate = get_object_or_404(UserProfile, user__username=request.POST.get('candidate'))
         if candidate == voter:
-            return HttpResponseBadRequest('You cannot vote yourself')
+            messages.error(request, 'نمی‌تونی به خودت رای بدی!')
+            return redirect('question')
         q = get_object_or_404(TheMost, pk=request.POST.get('question_id'))
         try:
             Vote.objects.create(voter=voter, candidate=candidate, the_most=q)
         except IntegrityError:
-            return HttpResponseBadRequest('You have already voted')
+            messages.error(request, 'به این مورد قبلا رای داده بودی، ممکنه دوبار بعدی رو زده باشی!')
+            return redirect('question')
         return HttpResponseRedirect(reverse('question'))
     else:
         remaining_questions = TheMost.objects.exclude(vote__voter=voter)
@@ -32,7 +35,8 @@ def question(request):
         else:
             chosen_question = None
 
-        candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(user__username=voter.user.username)
+        candidates = UserProfile.objects.filter(user__is_superuser=False).exclude(
+            user__username=voter.user.username).order_by('?')
         return render(request, 'main/question.html', {
             'question': chosen_question,
             'candidates': candidates,
@@ -47,14 +51,16 @@ def comment(request):
     if request.method == 'POST':
         candidate = get_object_or_404(UserProfile, user__username=request.POST.get('candidate'))
         if candidate == commenter:
-            return HttpResponseBadRequest('You cannot send comment to yourself')
+            messages.error(request, 'نمی‌تونی برای خودت نظر بفرستی')
+            return redirect('comment')
         text = request.POST.get('text')
 
         comment_id = request.POST.get('id')
         if comment_id != 'None' and comment_id:
             c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
             if not c:
-                return HttpResponseBadRequest('You cannot access this comment')
+                messages.error(request, 'به این نظر دسترسی نداری!')
+                return redirect('comments')
             c.target = candidate
             c.text = text
             c.save()
@@ -67,7 +73,8 @@ def comment(request):
         if comment_id:
             c = Comment.objects.filter(commenter=commenter, id=comment_id).first()
             if not c:
-                return HttpResponseBadRequest('You cannot access this comment')
+                messages.error(request, 'به این نظر دسترسی نداری!')
+                return redirect('comments')
         else:
             to = request.GET.get('to')
             if to:
@@ -102,13 +109,15 @@ def opinion(request):
     if request.method == 'POST':
         subject = request.POST.get('subject')
         if not subject:
-            return HttpResponseBadRequest('Fill the subject field')
+            messages.error(request, 'عنوان رو پر نکردی!')
+            return redirect('opinion')
         text = request.POST.get('text')
         opinion_id = request.POST.get('id')
         if opinion_id:
             o = Opinion.objects.filter(teller=teller, id=opinion_id).first()
             if not o:
-                return HttpResponseBadRequest('You cannot access this opinion')
+                messages.error(request, 'به این نظر دسترسی نداری!')
+                return redirect('opinions')
             o.subject = subject
             o.text = text
             o.save()
@@ -121,7 +130,8 @@ def opinion(request):
         if opinion_id:
             o = Opinion.objects.filter(teller=teller, id=opinion_id).first()
             if not o:
-                return HttpResponseBadRequest('You cannot access this opinion')
+                messages.error(request, 'به این نظر دسترسی نداری!')
+                return redirect('opinions')
         else:
             o = None
         return render(request, 'main/thought.html', {
@@ -157,7 +167,8 @@ def login(request):
             if next:
                 return redirect(next)
             else:
-                return redirect('/')
+                messages.success(request, 'خوش اومدی!')
+                return redirect('home')
         else:
             return render(request, 'main/login.html', {})
     else:
@@ -167,6 +178,7 @@ def login(request):
 @login_required
 def logout(request):
     auth_logout(request)
+    messages.success(request, 'خسته نباشی! اگه بازم خواستی به کسی نظر بدی یا نظراتو ویرایش کنی برگرد!')
     return redirect('/login')
 
 
@@ -198,8 +210,14 @@ def set_profile(request):
             path = settings.MEDIA_ROOT + '/' + name
             if os.path.isfile(path):
                 os.remove(path)
-            fs = FileSystemStorage()
-            filename = fs.save(name, myfile)
+            crop_info = request.POST.get('crop')
+            crop_info = crop_info.split(',')
+            im = Image.open(request.FILES['profile-photo'])
+            im = im.crop((float(crop_info[0]), float(crop_info[1]), float(crop_info[0]) + float(crop_info[2]),
+                          float(crop_info[1]) + float(crop_info[3])))
+            im.save(path)
+            # fs = FileSystemStorage()
+            # filename = fs.save(name, myfile)
             # uploaded_file_url = fs.url(filename)
             user.profile_picture = name
             user.save()
