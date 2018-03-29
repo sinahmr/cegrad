@@ -9,52 +9,40 @@ ahanchi,امیرمحسن,آهنچی,m
 ahnazari,احمد,نظری,m
 ajafari,علی,جعفری,m
 ajjalali,امیرعباس,جلالی,m
-alifetrat,,علی فطرت,m
 alimian,مهشاد,علیمیان,f
 alimohammadi,یگانه,علی محمدی,f
-alireza,,علی رضا,
-aliromei,,علی رومی,
-aliyarinia,,علی یارنیا,
 amfaraji,علی محمد,فرجی,m
 amnabedi,امین,عابدی,m
 anabestani,نازنین,عنابستانی,f
-anekavand,,نکاوند,
 anemati,علی,نعمتی,m
 arajabi,علی,رجبی,m
 aramani,علیرضا,امانی,m
 arfatemi,آرزو,فاطمی,f
 asafari,امیرحسین,صفری,m
-ashafiee,,شفیعی,
 avaziri,امیرحسین,وزیری,m
 babaiee,رعنا (زهرا),بابایی,f
 baharlooei,رضا,بهارلویی,m
-balizadeh,,علیزاده,
 barari,نیکی,براری,f
 baratirl,,براتی,
 behnamnia,آرمین,بهنامنیا,m
 behrouzifar,مهدیه,بهروزی فر,
 berjisian,محمدحسام,برجیسیان,m
-chabi,سروش,چاآبی,m
+chabi,سروش,چاابی,m
 chehregosha,امید,چهره گشا,m
 daneshvaramoli,محمد رضا,دانشور آملی,m
-darusch,,,
 davoodi,مهدی,داوودی کاخکی,m
-dihnf,,,
 disdishajli,,حاجلی,
 effatpanahhesari,حسین,عفت پناه,m
 eheidari,الیاس,حیدری,m
 ekhaleghpanah,عماد,خالق پناه,m
 ershadi,غزال,ارشادی,f
-esafajoo,,صفاجو,
 esalari,عرفان,سالاری,m
 esalehi,عرفان,سیدصالحی,m
-esharifi,,شریفی,
 falipour,فاطمه,علیپور,f
 farshadfar,پارسا,فرشادفر,m
 faryabi,محمدمهدی,فاریابی,m
 fayazbakhsh,مجتبی,فیاض بخش,m
 ferdosi,محسن,فردوسی,m
-fghassemi,,قاسمی,
 fshokohi,فاطمه,شکوهی,f
 gholamzade,آتنا,غلام زاده,f
 gholamzadeh,جعفر,غلام زاده,m
@@ -62,34 +50,24 @@ gshshahkarami,گلنوش,شاهکرمی,f
 haakrami,حنانه,اکرمی,f
 hajiabadi,علی,حاجی آبادی,m
 hajialikhani,محمد جواد,حاجی علیخانی,m
-hakian,,,
 hamidizadeh,عطیه,حمیدی زاده,f
-hamiidi,صدیق,حمیدی,
+hamiidi,,حمیدی,
 hassani,فاطمه,حسنی,f
 hbarghi,حانیه,برغی,f
 hnikpey,حسام,نیکپی,m
-honarkhah,,,
-hosseingholizadeh,,حسین قلی زاده,
-hovanessian,,,
-hoyousefi,,یوسفی,
 hshirzad,حامد,شیرزاد,m
-htaammoli,,,
-huakbarzadeh,,اکبرزاده,
 ihosseini,ایمان,حسینی زوارکی,m
 iliramezani,ایلیاد,رمضانی,m
-iranpour,,ایران پور,
 jeddi,احمدرضا,جدی,m
 kalati,فاطمه,کلاتی,f
 kgatmiry,خشایار,گتمیری,m
-khafezi,,حافظی,
 khashkhash,محمدامین,خشخاش مقدم,m
-khhosseini,,حسینی,
+khhosseini,سید محمدحسین,حسینی,m
 kousheshi,محمد,کوششی,m
 loghmani,عرفان ,لقمانی,m
 majlesi,آلاله,مجلسی,f
 malekan,ایمان,ملکان,m
 mansourian,مطهره,منصوریان,f
-masein,,,
 masoomy,محمد,معصومی,m
 melotfi,مهرشاد,لطفی,m
 mfathi,محمدحامد,فتحی,m
@@ -122,18 +100,14 @@ pbehnamghader,پری‌شاد,بهنام قادر,f
 phajesmaeeli,پدرام,حاج اسماعیلی,m
 pmirhosseini,پویا,میرحسینی,m
 pordel,پارسا,پوردل,m
-pourdabiri,,پوردبیری,
 pourdamghani,آرش,پور دامغانی,m
 ppayami,پریسا,پیامی شبستری,f
-psadatian,,ساداتیان,
 rafei,محمد,رافعی,m
 rafshar,رامتین,افشار,m
 rahimiazghan,رضا,رحیمی ازقان,
 rasaii,سید علی,رسایی,m
-rashetnia,,,
 razavimohseni,میلاد,رضوی محسنی,m
 razizi,رکن الدین,عزیزی,m
-reslami,,اسلامی,
 rezaeei,محسن,رضایی,m
 rezvans,روژین,رضوان,f
 rkarimipour,ریحانه,کریمی پور,f
@@ -146,26 +120,19 @@ satabatabaee,علی,طباطبایی,
 sfaez,صابره,فائز,
 sfaraji,سینا,فرجی,m
 shahamatnaderi,مونا,شهامت نادری,f
-shahani,,,
 shati,پویا,شتی,m
 sheybani,سهیل,شیبانی,m
 shkhastoo,شروین,خستو,m
 sihajimiri,سینا,حاجی میری,m
 smousavi,سپهر,موسوی,m
-srashidi,,رشیدی,
-ssalavi,,علوی,
 ssalehi,سید محمدحسین,سیدصالحی,m
 ssarajian,سپیده,سراجیان,f
 ssmonfared,سهند,صنیعی منفرد,m
-strbehnia,,بهنیا,
 szamani,سروش,زمانی,m
 tabaeeaqdaee,سید علی,طبایی,m
-tootoonchi,,توتون چی,
-tsafaie,تینا,صفایی,
 usefkhani,احمدرضا,یوسفخانی,m
 yazdian,نسیم,یزدیان,f
 ydabiran,یاشار,دبیران,m
-zamiri,,امیری,
 zeshabani,زینب,شعبانی,m
 zeynali,علی,زینالی,m
 zsedaghat,زهرا,صداقت,f
