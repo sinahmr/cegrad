@@ -114,6 +114,9 @@ body {
 <div class="ui large top fixed hidden menu">
   <div class="ui container">
     <a  href="#home" class="active item">خانه</a>
+    <a class="item" href="{% url 'contact' %}">
+        تماس با ما
+    </a>
     <div class="right menu">
       <div class="item">
         {% if request.user.is_authenticated %}

@@ -19,6 +19,9 @@
         <a class="launch icon item" href="{% url 'home' %}">
             خانه
         </a>
+        <a class="launch icon item" href="{% url 'contact' %}">
+            تماس با ما
+        </a>
 
         <div class="right menu">
             {% if request.user.is_authenticated %}
@@ -27,8 +30,8 @@
             <i class="dropdown icon"></i>
             <div class="menu">
                 <a class="item" href="{% url 'question' %}">ترین‌ها</a>
-                <a class="item" href="{% url 'opinions' %}">متن درباره‌ی دوران دانشجویی</a>
-                <a class="item" href="{% url 'comments' %}">نظر به دوستان</a>
+                <a class="item" href="{% url 'opinions' %}">متن‌‌های یادگاری من</a>
+                <a class="item" href="{% url 'comments' %}">متن برای دوستانم</a>
                 <a class="item" href="{% url 'people' %}">هم‌ دوره‌ای‌ها</a>
                 <a class="item" href="{% url 'logout' %}">خروج</a>
             <div class="divider"></div>
@@ -64,8 +67,8 @@
         </h4>
     </a>
     <a class="item" href="{% url 'question' %}">ترین‌ها</a>
-    <a class="item" href="{% url 'opinions' %}">متن درباره‌ی دوران دانشجویی</a>
-    <a class="item" href="{% url 'comments' %}">نظر به دوستان</a>
+    <a class="item" href="{% url 'opinions' %}">متن‌‌های یادگاری من</a>
+    <a class="item" href="{% url 'comments' %}">متن برای دوستانم</a>
     <a class="item" href="{% url 'people' %}">هم‌ دوره‌ای‌ها</a>
     <a class="item" href="{% url 'logout' %}">خروج</a>
 </div>

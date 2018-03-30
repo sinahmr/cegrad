@@ -7,8 +7,8 @@
     <div class="column">
         {% if type == 'comment' %}
         <h1>
-            نظرهای من درباره‌ی دوستان
-            <div class="ui icon button" data-content="متنایی که برای دوستامون می‌نویسیم قراره توی دفترچه یادگاری چاپ بشه!" data-position="bottom left">
+            متن‌های من برای دوستانم
+            <div class="ui icon button" data-content="متنایی که برای دوستامون می‌نویسیم قراره توی دفترچه یادگاری توی صفحشون چاپ بشه!" data-position="bottom left">
               <i class="question outline icon"></i>
             </div>
         </h1>
@@ -35,13 +35,13 @@
             </div>
           </div>
             {% empty %}
-            <h4>هنوز برای کسی نظر نگذاشته‌ای...</h4>
+            <h4>هنوز برای کسی متن ننوشتی...</h4>
             {% endfor %}
         </div>
         {% else %}
         <h1>
-            نظرهای من درباره‌ی دوران دانشجویی
-            <div class="ui icon button" data-content="یه متن درباره‌ی دوران دانشجویی بنویس! این متن توی صفحه‌ی خودت توی دفترچه‌ی یادگاری‌ دوره چاپ می‌شه." data-position="bottom left">
+            متن‌‌های یادگاری من
+            <div class="ui icon button" data-content="یک یا چند متن درباره‌ی خودت یا دوران دانشجوییت بنویس! این متن‌ها توی صفحه‌ی خودت توی دفترچه‌ی یادگاری‌ دوره چاپ می‌شه." data-position="bottom left">
               <i class="question outline icon"></i>
             </div>
         </h1>
@@ -61,16 +61,16 @@
             </div>
           </div>
             {% empty %}
-            <h4>هنوز نظری رو ثبت نکرده‌ای...</h4>
+            <h4>هنوز متنی رو ثبت نکرده‌ای...</h4>
             {% endfor %}
             </div>
         {% endif %}
 
             <div>
                 {% if type == 'comment' %}
-                <a class="ui button positive" href="{% url 'comment' %}">نظر جدید</a>
+                <a class="ui button positive" href="{% url 'comment' %}">متن جدید</a>
                 {% else %}
-                <a class="ui button positive" href="{% url 'opinion' %}">نظر جدید</a>
+                <a class="ui button positive" href="{% url 'opinion' %}">متن جدید</a>
                 {% endif %}
             </div>
     </div>

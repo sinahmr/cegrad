@@ -11,18 +11,14 @@
     <div class="ui two column stackable grid centered">
         <div class="column">
             <h1>
-            {% if type == 'comment' %}
-                ارسال نظر
-            {% else %}
-                ثبت متن
-            {% endif %}
+                نوشتن متن
             </h1>
             <form method="post" class="ui form">
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ item.id }}" />
                 {% if type == 'comment' %}
                 <div class="required field">
-                    <label>به</label>
+                    <label>برای</label>
                     <div class="ui fluid search selection dropdown">
                         <input type="hidden" name="candidate" required>
                         <i class="dropdown icon"></i>
@@ -46,11 +42,11 @@
                 {% else %}
                 <div class="required field">
                     <label>موضوع</label>
-                    <div><input type="text" name="subject" value="{{ item.subject }}" required></div>
+                    <div><input type="text" name="subject" value="{{ item.subject }}"></div>
                 </div>
                 {% endif %}
                 <div class="required field">
-                    <label>نظر من</label>
+                    <label>متن</label>
                     <textarea name="text">{{ item.text }}</textarea>
                 </div>
                 <input class="ui button" type="submit" value="بفرست"/>

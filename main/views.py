@@ -232,3 +232,7 @@ def people(request):
     return render(request, 'main/people.html', {
         'people': people
     })
+
+
+def contact(request):
+    return render(request, 'main/contact.html', {})
