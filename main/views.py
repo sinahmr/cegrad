@@ -164,12 +164,13 @@ def login(request):
         if user is not None:
             next = request.GET.get('next')
             auth_login(request, user)
+            messages.success(request, 'خوش اومدی!')
             if next:
                 return redirect(next)
             else:
-                messages.success(request, 'خوش اومدی!')
                 return redirect('home')
         else:
+            messages.error(request, 'نام کاربری یا رمز عبور اشتباه است.')
             return render(request, 'main/login.html', {})
     else:
         return render(request, 'main/login.html', {})
@@ -209,7 +210,8 @@ def set_profile(request):
             name = os.path.join('profiles', name)
             path = settings.MEDIA_ROOT + '/' + name
             old_path = settings.BASE_DIR + '/' + user.profile_picture.url
-            if os.path.isfile(old_path):
+            # second condition is to not delete default photos!
+            if os.path.isfile(old_path) and 'profiles' in user.profile_picture.url.split('/'):
                 os.remove(old_path)
             crop_info = request.POST.get('crop')
             crop_info = crop_info.split(',')
