@@ -32,7 +32,7 @@
                         {% if request.user != p.user %}
                         <a href="{% url 'comment' %}?to={{ p.user.username }}">
                           <i class="pencil alternate icon"></i>
-                            ارسال نظر
+                            ارسال متن
                         </a>
                         {% else %}
                         <a href="{% url 'opinion' %}">
