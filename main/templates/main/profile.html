@@ -35,9 +35,9 @@
                         </div>
                     </div>
                     {% if request.user.userprofile.profile_picture %}
-                    <img id="profileimg" class="medium ui image" src="/static/media/{{ request.user.userprofile.profile_picture }}">
+                    <img id="profileimg" class="medium ui image" src="/media/{{ request.user.userprofile.profile_picture }}">
                     {% else %}
-                    <img id="profileimg" class="medium ui image" src="/static/media/default-profile-picture.jpg">
+                    <img id="profileimg" class="medium ui image" src="/media/default-profile-picture.jpg">
                     {% endif %}
                 </div>
                   </div>

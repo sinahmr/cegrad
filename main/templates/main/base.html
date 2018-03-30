@@ -34,7 +34,7 @@
             <div class="divider"></div>
     <a class="item" href="{% url 'profile' %}">
         {% if request.user.userprofile.profile_picture %}
-        <img src="/static/media/{{ request.user.userprofile.profile_picture }}" class="ui mini rounded image">
+        <img src="/media/{{ request.user.userprofile.profile_picture }}" class="ui mini rounded image">
         {% else %}
         <i class="smile outline icon"></i>
         {% endif %}
@@ -56,7 +56,7 @@
     <a class="item" href="{% url 'profile' %}">
         <h4 class="ui image">
             {% if request.user.userprofile.profile_picture %}
-            <img src="/static/media/{{ request.user.userprofile.profile_picture }}" class="ui mini rounded image">
+            <img src="/media/{{ request.user.userprofile.profile_picture }}" class="ui mini rounded image">
             {% else %}
             <i class="smile outline icon"></i>
             {% endif %}
