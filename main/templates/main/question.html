@@ -14,7 +14,7 @@
                 </div>
             </h1>
             <div>
-                <span>اگه یه سوالی رو نمی‌خوای جواب بدی اولین گزینه‌ی لیست که نوشته «جواب نمی‌دم» رو انتخاب کن.</span>
+                <span>اگه سوالی رو نمی‌خوای جواب بدی اولین گزینه‌ی لیست که نوشته «جواب نمی‌دم» رو انتخاب کن.</span>
                 <br/>
                 <span>فقط دقت کن، چه کسی رو انتخاب بکنی و چه بگی «جواب نمی‌دم»، بعد از این که دکمه‌ی «بعدی» رو زدی، دیگه نظرت قابل ویرایش نیست.</span>
             </div>
@@ -71,7 +71,7 @@
 {% block script %}
 <script>
     $( document ).ready(function () {
-        $('.ui.dropdown').dropdown();
+        $('.ui.dropdown').dropdown({ 'fullTextSearch': 'exact' });
         $('#q-progress').progress({
             text: {
                 active: '{value} سوال از {total} سوالو جواب دادی!',

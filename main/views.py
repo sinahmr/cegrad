@@ -236,9 +236,7 @@ def set_profile(request):
 
 
 def people(request):
-    people1 = UserProfile.objects.filter(user__is_superuser=False).order_by('user__last_name').exclude(user__last_name="")
-    people2 = UserProfile.objects.filter(user__is_superuser=False, user__last_name="").order_by('user__username')
-    people = list(chain(people1, people2))
+    people = UserProfile.objects.filter(user__is_superuser=False).order_by('user__last_name')
     return render(request, 'main/people.html', {
         'people': people
     })
