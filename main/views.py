@@ -10,6 +10,7 @@ from random import choice, randint
 from main.models import *
 from django.contrib.auth.models import User
 from django.contrib import messages
+from itertools import chain
 from PIL import Image
 
 
@@ -235,7 +236,9 @@ def set_profile(request):
 
 
 def people(request):
-    people = UserProfile.objects.filter(user__is_superuser=False)
+    people1 = UserProfile.objects.filter(user__is_superuser=False).order_by('user__last_name').exclude(user__last_name="")
+    people2 = UserProfile.objects.filter(user__is_superuser=False, user__last_name="").order_by('user__username')
+    people = list(chain(people1, people2))
     return render(request, 'main/people.html', {
         'people': people
     })
