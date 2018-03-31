@@ -58,7 +58,9 @@
 {% block script %}
 <script>
     $( document ).ready(function () {
-        $('.ui.dropdown').dropdown('set selected', '{{ item.target.user.username }}');
+        $('.ui.dropdown')
+            .dropdown('set selected', '{{ item.target.user.username }}')
+            .dropdown({ 'fullTextSearch': 'exact' });
         $('.ui.form')
           .form({
             fields: {

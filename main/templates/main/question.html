@@ -71,7 +71,7 @@
 {% block script %}
 <script>
     $( document ).ready(function () {
-        $('.ui.dropdown').dropdown();
+        $('.ui.dropdown').dropdown({ 'fullTextSearch': 'exact' });
         $('#q-progress').progress({
             text: {
                 active: '{value} سوال از {total} سوالو جواب دادی!',
