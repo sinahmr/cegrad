@@ -34,7 +34,7 @@ class Vote(models.Model):
         unique_together = (('voter', 'the_most'),)
 
     voter = models.ForeignKey(UserProfile, related_name='voter')
-    candidate = models.ForeignKey(UserProfile, related_name='candidate')
+    candidate = models.ForeignKey(UserProfile, related_name='candidate', null=True, blank=True)
     the_most = models.ForeignKey(TheMost)
 
 

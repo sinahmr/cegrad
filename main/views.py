@@ -12,14 +12,19 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from PIL import Image
 
+
 @login_required
 def question(request):
     voter = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        candidate = get_object_or_404(UserProfile, user__username=request.POST.get('candidate'))
-        if candidate == voter:
-            messages.error(request, 'نمی‌تونی به خودت رای بدی!')
-            return redirect('question')
+        candidate_username = request.POST.get('candidate')
+        if candidate_username == 'null':
+            candidate = None
+        else:
+            candidate = get_object_or_404(UserProfile, user__username=candidate_username)
+            if candidate == voter:
+                messages.error(request, 'نمی‌تونی به خودت رای بدی!')
+                return redirect('question')
         q = get_object_or_404(TheMost, pk=request.POST.get('question_id'))
         try:
             Vote.objects.create(voter=voter, candidate=candidate, the_most=q)
