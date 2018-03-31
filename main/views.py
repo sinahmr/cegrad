@@ -13,14 +13,19 @@ from django.contrib import messages
 from itertools import chain
 from PIL import Image
 
+
 @login_required
 def question(request):
     voter = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        candidate = get_object_or_404(UserProfile, user__username=request.POST.get('candidate'))
-        if candidate == voter:
-            messages.error(request, 'نمی‌تونی به خودت رای بدی!')
-            return redirect('question')
+        candidate_username = request.POST.get('candidate')
+        if candidate_username == 'null':
+            candidate = None
+        else:
+            candidate = get_object_or_404(UserProfile, user__username=candidate_username)
+            if candidate == voter:
+                messages.error(request, 'نمی‌تونی به خودت رای بدی!')
+                return redirect('question')
         q = get_object_or_404(TheMost, pk=request.POST.get('question_id'))
         try:
             Vote.objects.create(voter=voter, candidate=candidate, the_most=q)
@@ -165,12 +170,13 @@ def login(request):
         if user is not None:
             next = request.GET.get('next')
             auth_login(request, user)
+            messages.success(request, 'خوش اومدی!')
             if next:
                 return redirect(next)
             else:
-                messages.success(request, 'خوش اومدی!')
                 return redirect('home')
         else:
+            messages.error(request, 'نام کاربری یا رمز عبور اشتباه است.')
             return render(request, 'main/login.html', {})
     else:
         return render(request, 'main/login.html', {})
@@ -210,7 +216,8 @@ def set_profile(request):
             name = os.path.join('profiles', name)
             path = settings.MEDIA_ROOT + '/' + name
             old_path = settings.BASE_DIR + '/' + user.profile_picture.url
-            if os.path.isfile(old_path):
+            # second condition is to not delete default photos!
+            if os.path.isfile(old_path) and 'profiles' in user.profile_picture.url.split('/'):
                 os.remove(old_path)
             crop_info = request.POST.get('crop')
             crop_info = crop_info.split(',')

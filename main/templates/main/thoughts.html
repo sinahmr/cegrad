@@ -25,7 +25,7 @@
             <div class="middle aligned content">
               <a class="header">{{ item.target.get_name }}</a>
               <div class="description">
-                {{ item.text }}
+                {{ item.text | linebreaksbr }}
               </div>
               <div class="extra">
                 <a href="{{ item.url }}" class="ui right floated button">
@@ -51,7 +51,7 @@
             <div class="middle aligned content">
               <a class="header">{{ item.subject }}</a>
               <div class="description">
-                {{ item.text }}
+                {{ item.text | linebreaksbr }}
               </div>
               <div class="extra">
                 <a href="{{ item.url }}" class="ui right floated button">
