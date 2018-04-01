@@ -18,6 +18,7 @@ class TheMostAdmin(admin.ModelAdmin):
 class VoteAdmin(admin.ModelAdmin):
     fields = ['voter', 'candidate', 'the_most']
     list_display = ['voter_get_name', 'candidate_get_name', 'the_most_get_text']
+    list_filter = ['candidate__user', 'the_most']
 
     def voter_get_name(self, obj):
         return obj.voter.get_name()
