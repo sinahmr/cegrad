@@ -28,6 +28,7 @@ class Command(BaseCommand):
                     'username': user.username,
                     'password': password
                 }, email_template_name='registration')
+                print('Sent to %s' % user.username)
             except Exception as e:
                 print('Error: %s, %s' % (user.username, e))
         print('OK')

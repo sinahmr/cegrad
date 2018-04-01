@@ -23,6 +23,8 @@ class VoteAdmin(admin.ModelAdmin):
         return obj.voter.get_name()
 
     def candidate_get_name(self, obj):
+        if not obj.candidate:
+            return '-'
         return obj.candidate.get_name()
 
     def the_most_get_text(self, obj):
