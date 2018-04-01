@@ -9,12 +9,20 @@
 {% endblock %}
 
 {% block content %}
-    <div class="ui center aligned stackable grid">
+    <div class="">
       <div class="container">
           <h1>{{ request.user.is_authenticated|yesno:'هم‌دوره‌ای‌ها,دانشجویان ورودی ۹۳ دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف'}}</h1>
+          <form class="ui form">
+          <div class="two fields">
+              <div class="field">
+            <label>جستجو</label>
+            <input id="search-items" placeholder="۹۳ای‌ها" type="text">
+              </div>
+          </div>
+          </form>
         <div class="ui six doubling cards">
             {% for p in people %}
-                <div class="card">
+                <div class="ui card fluid">
                     <div class="image">
                         {% if p.profile_picture %}
                         <img src="/media/{{ p.profile_picture }}">
@@ -50,6 +58,17 @@
 {% endblock %}
 {% block script %}
     <script>
+$("#search-items").bind("keyup paste", function() {
+    var searchText = $("#search-items").val();
 
+    $(".card").each(function() {
+         var $this = $(this)
+         if ($this.find('.author').text().search(searchText) === -1) {
+             $this.hide()
+         } else {
+             $this.show()
+         }
+    });
+});
     </script>
 {% endblock %}
