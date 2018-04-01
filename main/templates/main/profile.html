@@ -99,13 +99,17 @@
         $("#file").change(function(e) {
             if (this.files && this.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function (n) {
 
                     $('#modalimg')
                         .attr('src', n.target.result);
-                    $('.ui.modal')
-                      .modal('show')
+                    $('.ui.modal').modal({
+                    onHidden: function() {
+                        $('#file').val('');
+                        $('#crop-info').val('');
+                        cropper.destroy();
+                    }
+                    }).modal('show')
                     ;
                     var image = document.getElementById('modalimg');
                     var cropper = new Cropper(image, {
@@ -129,10 +133,6 @@
         });
         $('.positive.button').click(function(){
             $('.form').submit();
-        });
-        $('.deny.button').click(function(){
-            $('#file').val('');
-            $('#crop-info').val('');
         });
         });
     </script>
