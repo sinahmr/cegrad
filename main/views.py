@@ -235,6 +235,7 @@ def set_profile(request):
     return redirect('profile')
 
 
+@login_required
 def people(request):
     people = UserProfile.objects.filter(user__is_superuser=False).order_by('user__last_name')
     return render(request, 'main/people.html', {
