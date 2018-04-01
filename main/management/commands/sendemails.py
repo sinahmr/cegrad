@@ -16,6 +16,9 @@ class Command(BaseCommand):
         if options['username']:
             users = users.filter(username__in=options['username'])
         for user in users:
+            if user.last_login:
+                print('Have sent to %s, so will not send now' % user.username)
+                continue
             try:
                 password = User.objects.make_random_password()
                 user.set_password(password)
