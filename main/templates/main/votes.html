@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}رأی‌های تو{% endblock %}
+{% block content %}
+    <div class="ui two column stackable grid centered">
+        <div class="column">
+            <h1>
+                <span>رأی‌های من</span>
+                <div class="ui icon button"
+                     data-content="اگه به سوالی اشتباه رأی دادی، می‌تونی از اینجا رأی‌ت رو پاک کنی تا اون سوال دوباره توی بخش «ترین‌ها» ازت پرسیده بشه."
+                     data-position="bottom left">
+                    <i class="question outline icon"></i>
+                </div>
+            </h1>
+            <br/>
+            <div class="ui divided items">
+                {% for vote in votes %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <span>{{ vote.the_most.text }}: </span>
+                            {% if vote.candidate %}
+                                <span>{{ vote.candidate.get_name }}</span>
+                            {% else %}
+                                <span>جواب ندادی</span>
+                            {% endif %}
+                            <span>
+                                <a href="{{ vote.delete_url }}" class="ui right floated button">حذف</a>
+                            </span>
+                        </div>
+                    </div>
+                {% empty %}
+                    <h4>هنوز رأی‌ای رو ثبت نکرده‌ای...</h4>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('.icon.button')
+                .popup()
+            ;
+        });
+    </script>
+{% endblock %}

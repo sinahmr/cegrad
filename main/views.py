@@ -245,3 +245,22 @@ def people(request):
 
 def contact(request):
     return render(request, 'main/contact.html', {})
+
+
+@login_required
+def votes(request):
+    voter = get_object_or_404(UserProfile, user=request.user)
+    vs = Vote.objects.filter(voter=voter)
+    for v in vs:
+        v.delete_url = reverse('unvote') + ('?id=%d' % v.id)
+    return render(request, 'main/votes.html', {
+        'votes': vs
+    })
+
+
+@login_required
+def unvote(request):
+    voter = get_object_or_404(UserProfile, user=request.user)
+    vote_id = request.GET.get('id')
+    Vote.objects.filter(voter=voter, pk=vote_id).delete()
+    return redirect('votes')

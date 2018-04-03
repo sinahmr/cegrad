@@ -21,6 +21,9 @@ class UserProfile(models.Model):
             return self.user.first_name + ' ' + self.user.last_name
         return self.user.username
 
+    def __str__(self):
+        return self.get_name()
+
 
 class TheMost(models.Model):
     text = models.TextField()
