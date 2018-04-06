@@ -1,0 +1,45 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}شرکت در ترین های جدید{% endblock %}
+{% block content %}
+    <div class="ui two column stackable grid centered">
+        <div class="column">
+            <h1>
+                <span>ترین های جدید</span>
+                <div class="ui icon button"
+                     data-content="اینجا می تونی در ترین های جدید شرکت کنی، به ترین های جدید فقط کسانی که شرکت کرده باشن می تونن رای بدن و فقط کسانی که شرکت کرده‌اند می تونن انتخاب بشن"
+                     data-position="bottom left">
+                    <i class="question outline icon"></i>
+                </div>
+            </h1>
+            <br/>
+            <div class="ui divided items">
+                {% for the_most in the_mosts %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <span>{{ the_most.text }}: </span>
+                            {% if the_most.value %}
+                                <a class="right floated" href="{{ the_most.toggle_url }}"><button class="positive ui button">شرکت نمی کنم</button></a>
+                            {% else %}
+                                <a class="right floated" href="{{ the_most.toggle_url }}"><button class="negative ui button">شرکت می کنم</button><a>
+                            {% endif %}
+{#                            <span>#}
+{#                                <a href="{{ vote.delete_url }}" class="ui right floated button">حذف</a>#}
+{#                            </span>#}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            $('.icon.button')
+                .popup()
+            ;
+        });
+    </script>
+{% endblock %}

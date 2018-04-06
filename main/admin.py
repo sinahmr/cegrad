@@ -51,8 +51,46 @@ class OpinionAdmin(admin.ModelAdmin):
         return obj.teller.get_name()
 
 
+class TheMost2Admin(admin.ModelAdmin):
+    fields = ['text']
+    list_display = ['text']
+
+
+class Vote2Admin(admin.ModelAdmin):
+    fields = ['voter', 'candidate', 'the_most']
+    list_display = ['candidate_get_name', 'the_most_get_text']
+    list_filter = ['candidate__user', 'the_most']
+
+    def voter_get_name(self, obj):
+        return obj.voter.get_name()
+
+    def candidate_get_name(self, obj):
+        if not obj.candidate:
+            return '-'
+        return obj.candidate.get_name()
+
+    def the_most_get_text(self, obj):
+        return obj.the_most.text
+
+
+class CandidateAdmin(admin.ModelAdmin):
+    fields = ['the_most', 'candidate']
+    list_display = ['the_most_get_text', 'candidate_get_name']
+    list_filter = ['candidate__user', 'the_most']
+
+    def candidate_get_name(self, obj):
+        if not obj.candidate:
+            return '-'
+        return obj.candidate.get_name()
+
+    def the_most_get_text(self, obj):
+        return obj.the_most.text
+
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(TheMost, TheMostAdmin)
 admin.site.register(Vote, VoteAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Opinion, OpinionAdmin)
+admin.site.register(TheMost2, TheMost2Admin)
+admin.site.register(Vote2, Vote2Admin)
+admin.site.register(Candidate, CandidateAdmin)

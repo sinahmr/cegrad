@@ -51,3 +51,29 @@ class Opinion(models.Model):
     teller = models.ForeignKey(UserProfile)
     subject = models.CharField(max_length=1000)
     text = models.TextField()
+
+
+class TheMost2(models.Model):
+    text = models.TextField()
+
+    def __str__(self):
+
+        return self.text
+
+
+class Candidate(models.Model):
+    class Meta:
+        unique_together = (('the_most', 'candidate'),)
+
+    the_most = models.ForeignKey(TheMost2)
+    candidate = models.ForeignKey(UserProfile, related_name='candidate2')
+
+
+class Vote2(models.Model):
+    class Meta:
+        unique_together = (('voter', 'the_most'),)
+
+    voter = models.ForeignKey(UserProfile, related_name='voter2')
+    candidate = models.ForeignKey(UserProfile, related_name='candidate3', null=True, blank=True)
+    the_most = models.ForeignKey(TheMost2, null=True, blank=True)
+

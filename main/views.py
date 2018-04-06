@@ -52,6 +52,44 @@ def question(request):
 
 
 @login_required
+def question2(request):
+    voter = get_object_or_404(UserProfile, user=request.user)
+    if request.method == 'POST':
+        candidate_username = request.POST.get('candidate')
+        if candidate_username == 'null':
+            candidate = None
+        else:
+            candidate = get_object_or_404(UserProfile, user__username=candidate_username)
+            if candidate == voter:
+                messages.error(request, 'نمی‌تونی به خودت رای بدی!')
+                return redirect('question2')
+        q = get_object_or_404(TheMost2, pk=request.POST.get('question_id'))
+        try:
+            Vote2.objects.create(voter=voter, candidate=candidate, the_most=q)
+        except IntegrityError:
+            messages.error(request, 'به این مورد قبلا رای داده بودی، ممکنه دوبار بعدی رو زده باشی!')
+            return redirect('question2')
+        return HttpResponseRedirect(reverse('question2'))
+    else:
+        remaining_questions = TheMost2.objects.filter(candidate__candidate=voter).exclude(vote2__voter=voter)
+        remaining_count = remaining_questions.count()
+        if remaining_count > 0:
+            chosen_question = choice(remaining_questions)
+        else:
+            chosen_question = None
+
+        candidates = UserProfile.objects.filter(user__is_superuser=False, candidate2__the_most=chosen_question).exclude(
+            user__username=voter.user.username).order_by('?')
+
+        return render(request, 'main/question.html', {
+            'question': chosen_question,
+            'candidates': candidates,
+            'voted_count': TheMost2.objects.filter(vote2__voter=voter).count(),
+            'remaining_count': remaining_count
+        })
+
+
+@login_required
 def comment(request):
     commenter = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
@@ -71,6 +109,9 @@ def comment(request):
             c.text = text
             c.save()
         else:
+            anonymous = request.POST.get('anonymous')
+            if anonymous == 'on':
+                commenter = get_object_or_404(UserProfile, user__username='anonymous')
             Comment.objects.create(commenter=commenter, target=candidate, text=text)
 
         return HttpResponseRedirect(reverse('comments'))
@@ -251,10 +292,15 @@ def contact(request):
 def votes(request):
     voter = get_object_or_404(UserProfile, user=request.user)
     vs = Vote.objects.filter(voter=voter)
+    vs2 = Vote2.objects.filter(voter=voter)
     for v in vs:
         v.delete_url = reverse('unvote') + ('?id=%d' % v.id)
+    # for v in vs2:
+    #     v.delete_url = reverse('unvote2') + ('?id=%d' % v.id)
     return render(request, 'main/votes.html', {
-        'votes': vs
+        'votes': vs,
+        'votes2': vs2,
+        'count': vs.count() + vs2.count()
     })
 
 
@@ -264,3 +310,41 @@ def unvote(request):
     vote_id = request.GET.get('id')
     Vote.objects.filter(voter=voter, pk=vote_id).delete()
     return redirect('votes')
+
+#
+# @login_required
+# def unvote2(request):
+#     voter = get_object_or_404(UserProfile, user=request.user)
+#     vote_id = request.GET.get('id')
+#     Vote2.objects.filter(voter=voter, pk=vote_id).delete()
+#     return redirect('votes')
+#
+#
+# @login_required
+# def register(request):
+#     user = get_object_or_404(UserProfile, user=request.user)
+#     the_mosts = TheMost2.objects.all()
+#     for the_most in the_mosts:
+#         try:
+#             Candidate.objects.get(the_most=the_most, candidate=user)
+#             the_most.value = True
+#         except:
+#             the_most.value = False
+#         the_most.toggle_url = reverse('toggle') + ('?id=%d' % the_most.id)
+#
+#     return render(request, 'main/register.html', {
+#         'the_mosts': the_mosts
+#     })
+#
+#
+# @login_required
+# def toggle(request):
+#     user = get_object_or_404(UserProfile, user=request.user)
+#     the_most_id = request.GET.get('id')
+#     print(the_most_id)
+#     the_most = TheMost2.objects.get(pk=the_most_id)
+#     try:
+#         Candidate.objects.get(the_most=the_most, candidate=user).delete()
+#     except:
+#         Candidate.objects.create(the_most=the_most, candidate=user)
+#     return redirect('register')
