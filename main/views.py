@@ -112,6 +112,7 @@ def comment(request):
             anonymous = request.POST.get('anonymous')
             if anonymous == 'on':
                 commenter = get_object_or_404(UserProfile, user__username='anonymous')
+                messages.success(request, 'متن شما به صورت ناشناس برای %s ثبت شد.' % candidate.get_name())
             Comment.objects.create(commenter=commenter, target=candidate, text=text)
 
         return HttpResponseRedirect(reverse('comments'))
