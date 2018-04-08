@@ -54,6 +54,11 @@
                   <input type="checkbox" name="anonymous">
                   <label>ناشناس باشه</label>
                 </div>
+                {% elif "/comment?to=" in request.get_full_path %}
+                <div class="ui toggle checkbox right floated">
+                   <input type="checkbox" name="anonymous">
+                   <label>ناشناس باشه</label>
+                </div>
                 {% endif %}
                 <input class="ui button right floated" type="submit" value="بفرست"/>
             </form>
