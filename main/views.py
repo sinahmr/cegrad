@@ -321,31 +321,31 @@ def unvote(request):
 #     return redirect('votes')
 
 
-@login_required
-def register(request):
-    user = get_object_or_404(UserProfile, user=request.user)
-    the_mosts = TheMost2.objects.all()
-    for the_most in the_mosts:
-        try:
-            Candidate.objects.get(the_most=the_most, candidate=user)
-            the_most.value = True
-        except:
-            the_most.value = False
-        the_most.toggle_url = reverse('toggle') + ('?id=%d' % the_most.id)
-
-    return render(request, 'main/register.html', {
-        'the_mosts': the_mosts
-    })
-
-
-@login_required
-def toggle(request):
-    user = get_object_or_404(UserProfile, user=request.user)
-    the_most_id = request.GET.get('id')
-    print(the_most_id)
-    the_most = TheMost2.objects.get(pk=the_most_id)
-    try:
-        Candidate.objects.get(the_most=the_most, candidate=user).delete()
-    except:
-        Candidate.objects.create(the_most=the_most, candidate=user)
-    return redirect('register')
+# @login_required
+# def register(request):
+#     user = get_object_or_404(UserProfile, user=request.user)
+#     the_mosts = TheMost2.objects.all()
+#     for the_most in the_mosts:
+#         try:
+#             Candidate.objects.get(the_most=the_most, candidate=user)
+#             the_most.value = True
+#         except:
+#             the_most.value = False
+#         the_most.toggle_url = reverse('toggle') + ('?id=%d' % the_most.id)
+#
+#     return render(request, 'main/register.html', {
+#         'the_mosts': the_mosts
+#     })
+#
+#
+# @login_required
+# def toggle(request):
+#     user = get_object_or_404(UserProfile, user=request.user)
+#     the_most_id = request.GET.get('id')
+#     print(the_most_id)
+#     the_most = TheMost2.objects.get(pk=the_most_id)
+#     try:
+#         Candidate.objects.get(the_most=the_most, candidate=user).delete()
+#     except:
+#         Candidate.objects.create(the_most=the_most, candidate=user)
+#     return redirect('register')
