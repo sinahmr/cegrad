@@ -3,8 +3,8 @@
 
 {% block title %}شرکت در ترین های جدید{% endblock %}
 {% block content %}
-    <div class="ui two column stackable grid centered">
-        <div class="column">
+    <div class="ui grid centered">
+        <div class="twelve wide column">
             <h1>
                 <span>ترین های جدید</span>
                 <div class="ui icon button"
@@ -14,22 +14,48 @@
                 </div>
             </h1>
             <br/>
-            <div class="ui divided items">
-                {% for the_most in the_mosts %}
+            <div class="ui warning message">
+              <i class="close icon"></i>
+              <div class="header">
+               برای ثبت تغییرات حتما روی دکمه "ثبت" واقع در انتهای صفحه کلیک کنید.
+              </div>
+            </div>
+            <div class="ui">
+                <form method="post" class="ui form divided items">
+                    {% csrf_token %}
+
                     <div class="item">
                         <div class="middle aligned content">
-                            <span>{{ the_most.text }}: </span>
-                            {% if the_most.value %}
-                                <a class="right floated" href="{{ the_most.toggle_url }}"><button class="positive ui button">شرکت نمی کنم</button></a>
-                            {% else %}
-                                <a class="right floated" href="{{ the_most.toggle_url }}"><button class="negative ui button">شرکت می کنم</button><a>
-                            {% endif %}
-{#                            <span>#}
-{#                                <a href="{{ vote.delete_url }}" class="ui right floated button">حذف</a>#}
-{#                            </span>#}
+                            <span>شرکت در همه‌ی ترین ها:</span>
+                        </div>
+                        <div>
+                            <div class="ui toggle checkbox">
+                                <input type="checkbox" name="all">
+                              <label></label>
+                            </div>
                         </div>
                     </div>
-                {% endfor %}
+                    <div class="item"></div>
+
+                    {% for the_most in the_mosts %}
+                        <div class="item">
+                        <div class="middle aligned content">
+                            <span>{{ the_most.text }}: </span>
+                        </div>
+                            <div>
+                                <div class="ui toggle checkbox">
+                                    {% if the_most.value %}
+                                        <input type="checkbox" name="{{ the_most.name }}" checked class="TheMost">
+                                    {% else %}
+                                        <input type="checkbox" name="{{ the_most.name }}" class="TheMost">
+                                    {% endif %}
+                                  <label></label>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                   <input class="ui button right floated" type="submit" value="ثبت"/>
+                </form>
             </div>
         </div>
     </div>
@@ -40,6 +66,20 @@
             $('.icon.button')
                 .popup()
             ;
+        });
+
+        $('input[name="all"]').change(function () {
+            if($(this).is(":checked")){
+                $('input.TheMost').prop('checked', true);
+            }
+        });
+
+        $('input.TheMost').change(function () {
+            if($(this).is(":checked")){
+            }
+            else{
+                $('input[name="all"]').prop('checked', false);
+            }
         });
     </script>
 {% endblock %}

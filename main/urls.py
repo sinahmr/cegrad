@@ -32,7 +32,6 @@ urlpatterns = [
     url(r'profile/set$', views.set_profile, name='set_profile'),
     url(r'people$', views.people, name='people'),
     url(r'contact$', views.contact, name='contact'),
-    # url(r'register$', views.register, name='register'),
-    # url(r'toggle$', views.toggle, name='toggle'),
+    url(r'register$', views.register, name='register'),
     url(r'$', views.index, name='home')
 ]
