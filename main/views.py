@@ -299,8 +299,8 @@ def votes(request):
     vs2 = Vote2.objects.filter(voter=voter)
     for v in vs:
         v.delete_url = reverse('unvote') + ('?id=%d' % v.id)
-    # for v in vs2:
-    #     v.delete_url = reverse('unvote2') + ('?id=%d' % v.id)
+    for v in vs2:
+        v.delete_url = reverse('unvote2') + ('?id=%d' % v.id)
     return render(request, 'main/votes.html', {
         'votes': vs,
         'votes2': vs2,
@@ -315,29 +315,29 @@ def unvote(request):
     Vote.objects.filter(voter=voter, pk=vote_id).delete()
     return redirect('votes')
 
-#
-# @login_required
-# def unvote2(request):
-#     voter = get_object_or_404(UserProfile, user=request.user)
-#     vote_id = request.GET.get('id')
-#     Vote2.objects.filter(voter=voter, pk=vote_id).delete()
-#     return redirect('votes')
+
+@login_required
+def unvote2(request):
+    voter = get_object_or_404(UserProfile, user=request.user)
+    vote_id = request.GET.get('id')
+    Vote2.objects.filter(voter=voter, pk=vote_id).delete()
+    return redirect('votes')
 
 
 @csrf_exempt
 @login_required
 def register(request):
     if request.method == "POST":
-        user = get_object_or_404(UserProfile, user=request.user)
-        the_mosts = TheMost2.objects.all()
-        for the_most in the_mosts:
-            name = 'TheMost%d' % the_most.id
-            status = request.POST.get(name)
-            if status == 'on':
-                Candidate.objects.get_or_create(the_most=the_most, candidate=user)
-            else:
-                Candidate.objects.filter(the_most=the_most, candidate=user).delete()
-
+        # user = get_object_or_404(UserProfile, user=request.user)
+        # the_mosts = TheMost2.objects.all()
+        # for the_most in the_mosts:
+        #     name = 'TheMost%d' % the_most.id
+        #     status = request.POST.get(name)
+        #     if status == 'on':
+        #         Candidate.objects.get_or_create(the_most=the_most, candidate=user)
+        #     else:
+        #         Candidate.objects.filter(the_most=the_most, candidate=user).delete()
+        pass
     user = get_object_or_404(UserProfile, user=request.user)
     the_mosts = TheMost2.objects.all()
     for the_most in the_mosts:

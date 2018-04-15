@@ -30,21 +30,21 @@
                         </div>
                     </div>
                 {% endfor %}
-{#                {% for vote in votes2 %}#}
-{#                    <div class="item">#}
-{#                        <div class="middle aligned content">#}
-{#                            <span>{{ vote.the_most.text }}: </span>#}
-{#                            {% if vote.candidate %}#}
-{#                                <span>{{ vote.candidate.get_name }}</span>#}
-{#                            {% else %}#}
-{#                                <span>جواب ندادی</span>#}
-{#                            {% endif %}#}
-{#                            <span>#}
-{#                                <a href="{{ vote.delete_url }}" class="ui right floated button">حذف</a>#}
-{#                            </span>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
+                {% for vote in votes2 %}
+                    <div class="item">
+                        <div class="middle aligned content">
+                            <span>{{ vote.the_most.text }}: </span>
+                            {% if vote.candidate %}
+                                <span>{{ vote.candidate.get_name }}</span>
+                            {% else %}
+                                <span>جواب ندادی</span>
+                            {% endif %}
+                            <span>
+                                <a href="{{ vote.delete_url }}" class="ui right floated button">حذف</a>
+                            </span>
+                        </div>
+                    </div>
+                {% endfor %}
                 {% ifequal count 0 %}
                     <h4>هنوز رأی‌ای رو ثبت نکرده‌ای...</h4>
                 {% endifequal %}

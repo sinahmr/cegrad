@@ -14,10 +14,16 @@
                 </div>
             </h1>
             <br/>
-            <div class="ui warning message">
+{#            <div class="ui warning message">#}
+{#              <i class="close icon"></i>#}
+{#              <div class="header">#}
+{#               برای ثبت تغییرات حتما روی دکمه "ثبت" واقع در انتهای صفحه کلیک کنید.#}
+{#              </div>#}
+{#            </div>#}
+            <div class="ui negative message">
               <i class="close icon"></i>
               <div class="header">
-               برای ثبت تغییرات حتما روی دکمه "ثبت" واقع در انتهای صفحه کلیک کنید.
+               مهلت ثبت نام در ترین های جدید به پایان رسیده است.
               </div>
             </div>
             <div class="ui">
@@ -30,7 +36,7 @@
                         </div>
                         <div>
                             <div class="ui toggle checkbox">
-                                <input type="checkbox" name="all">
+                                <input type="checkbox" name="all" disabled>
                               <label></label>
                             </div>
                         </div>
@@ -45,16 +51,16 @@
                             <div>
                                 <div class="ui toggle checkbox">
                                     {% if the_most.value %}
-                                        <input type="checkbox" name="{{ the_most.name }}" checked class="TheMost">
+                                        <input type="checkbox" name="{{ the_most.name }}" checked class="TheMost" disabled>
                                     {% else %}
-                                        <input type="checkbox" name="{{ the_most.name }}" class="TheMost">
+                                        <input type="checkbox" name="{{ the_most.name }}" class="TheMost" disabled>
                                     {% endif %}
                                   <label></label>
                                 </div>
                             </div>
                         </div>
                     {% endfor %}
-                   <input class="ui button right floated" type="submit" value="ثبت"/>
+                   <input class="ui button right floated" type="submit" value="ثبت" disabled/>
                 </form>
             </div>
         </div>
