@@ -13,6 +13,14 @@
             <h1>
                 نوشتن متن
             </h1>
+            {% if "/comment" in request.get_full_path %}
+            <div class="ui negative message">
+              <i class="close icon"></i>
+              <div class="header">
+                  حداکثر تعداد کاراکترهای مجاز برای متن ۵۰۰ کاراکتر می باشد.
+              </div>
+            </div>
+            {% endif %}
             <form method="post" class="ui form">
                 {% csrf_token %}
                 <input type="hidden" name="id" value="{{ item.id }}" />
@@ -77,10 +85,11 @@
             fields: {
               {% if type == 'comment' %}
               candidate: 'empty',
+              text: ['maxLength[500]', 'empty'],
               {% else %}
               subject  : 'empty',
-              {% endif %}
               text     : 'empty',
+              {% endif %}
             }
           })
         ;
