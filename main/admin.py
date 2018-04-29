@@ -35,6 +35,7 @@ class VoteAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     fields = ['commenter', 'target', 'text']
     list_display = ['commenter_get_name', 'target_get_name', 'text']
+    list_filter = ['target', 'commenter']
 
     def commenter_get_name(self, obj):
         return obj.commenter.get_name()
