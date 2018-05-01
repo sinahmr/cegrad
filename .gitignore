@@ -4,3 +4,4 @@ env
 **/__pycache__/
 *.py[cod]
 main/static/media/profiles
+comments.xls
