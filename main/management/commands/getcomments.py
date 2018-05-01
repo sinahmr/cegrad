@@ -21,7 +21,7 @@ class Command(BaseCommand):
                 sheet.write(0, 1, "commenter")
                 sheet.write(0, 2, "target")
                 sheet.write(0, 3, "text")
-                comments = Comment.objects.filter(target__user=user)
+                comments = Comment.objects.filter(target__user=user, show=True)
                 for i, comment in enumerate(comments):
                     sheet.write(i+1, 0, comment.id)
                     sheet.write(i+1, 1, comment.commenter.get_name())

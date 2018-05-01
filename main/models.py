@@ -45,7 +45,7 @@ class Comment(models.Model):
     commenter = models.ForeignKey(UserProfile, related_name='commenter')
     target = models.ForeignKey(UserProfile, related_name='target', verbose_name='نظرگیرنده')
     text = models.TextField(verbose_name='متن نظر')
-
+    show = models.BooleanField(default=True)
 
 class Opinion(models.Model):
     teller = models.ForeignKey(UserProfile)
