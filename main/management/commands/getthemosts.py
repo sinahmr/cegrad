@@ -24,7 +24,7 @@ class Command(BaseCommand):
             votes = Vote.objects.filter(the_most=the_most).order_by('candidate')
             if votes:
                 book = xlwt.Workbook(encoding="utf-8")
-                sheet = book.add_sheet(the_most.text.replace('\u200c', ' '), cell_overwrite_ok=True)
+                sheet = book.add_sheet(the_most.text.replace('\u200c', ' ')[:30], cell_overwrite_ok=True)
                 sheet.write(0, 0, "#")
                 sheet.write(0, 1, "The Most")
                 sheet.write(0, 2, "Candidate")
@@ -52,7 +52,7 @@ class Command(BaseCommand):
                     sheet.write(row, 3, value)
                     row += 1
 
-                name = os.path.join('the_most', the_most.text.replace('\u200c', ' ') + '.xls')
+                name = os.path.join('the_most', the_most.text.replace('\u200c', ' ')[:30] + '.xls')
                 book.save(name)
 
         the_mosts = TheMost2.objects.all()
@@ -60,7 +60,7 @@ class Command(BaseCommand):
             votes = Vote2.objects.filter(the_most=the_most).order_by('candidate')
             if votes:
                 book = xlwt.Workbook(encoding="utf-8")
-                sheet = book.add_sheet(the_most.text.replace('\u200c', ' '), cell_overwrite_ok=True)
+                sheet = book.add_sheet(the_most.text.replace('\u200c', ' ')[:30], cell_overwrite_ok=True)
                 sheet.write(0, 0, "#")
                 sheet.write(0, 1, "The Most")
                 sheet.write(0, 2, "Candidate")
@@ -88,6 +88,6 @@ class Command(BaseCommand):
                     sheet.write(row, 3, value)
                     row += 1
 
-                name = os.path.join('the_most', the_most.text.replace('\u200c', ' ') + '.xls')
+                name = os.path.join('the_most', the_most.text.replace('\u200c', ' ')[:30] + '.xls')
                 book.save(name)
         print('OK')
