@@ -5,7 +5,7 @@ import os
 
 
 class Command(BaseCommand):
-    help = "Change users' password to something random and send email to them"
+    help = "get comments"
 
     def add_arguments(self, parser):
         parser.add_argument('username', nargs='*', type=str, default=None)

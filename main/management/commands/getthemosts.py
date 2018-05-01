@@ -7,7 +7,7 @@ import os
 
 
 class Command(BaseCommand):
-    help = "Change users' password to something random and send email to them"
+    help = "get The Most"
 
     def add_arguments(self, parser):
         parser.add_argument('the_mosts', nargs='*', type=str, default=None)
