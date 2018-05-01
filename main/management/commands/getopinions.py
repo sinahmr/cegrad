@@ -20,24 +20,22 @@ class Command(BaseCommand):
         except:
             pass
 
-        book = xlwt.Workbook(encoding="utf-8")
-        sheet = book.add_sheet('opinions', cell_overwrite_ok=True)
-        sheet.write(0, 0, "id")
-        sheet.write(0, 1, "teller")
-        sheet.write(0, 2, "subject")
-        sheet.write(0, 3, "text")
-        row = 1
-
         for user in users:
             opinions = Opinion.objects.filter(teller__user=user)
+            if opinions:
+                book = xlwt.Workbook(encoding="utf-8")
+                sheet = book.add_sheet(user.username, cell_overwrite_ok=True)
+                sheet.write(0, 0, "id")
+                sheet.write(0, 1, "teller")
+                sheet.write(0, 2, "subject")
+                sheet.write(0, 3, "text")
 
-            for opinion in opinions:
-                sheet.write(row, 0, opinion.id)
-                sheet.write(row, 1, opinion.teller.get_name())
-                sheet.write(row, 2, opinion.subject)
-                sheet.write(row, 3, opinion.text)
-                row += 1
+                for i, opinion in enumerate(opinions):
+                    sheet.write(i+1, 0, opinion.id)
+                    sheet.write(i+1, 1, opinion.teller.get_name())
+                    sheet.write(i+1, 2, opinion.subject)
+                    sheet.write(i+1, 3, opinion.text)
 
-        name = os.path.join('opinions', 'opinions' + '.xls')
-        book.save(name)
+                name = os.path.join('opinions', user.username + '.xls')
+                book.save(name)
         print('OK')
