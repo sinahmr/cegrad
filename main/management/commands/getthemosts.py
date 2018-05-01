@@ -52,7 +52,7 @@ class Command(BaseCommand):
                     sheet.write(row, 3, value)
                     row += 1
 
-                name = os.path.join('the_most', the_most.text + '.xls')
+                name = os.path.join('the_most', the_most.text.replace('\u200c', ' ') + '.xls')
                 book.save(name)
 
         the_mosts = TheMost2.objects.all()
@@ -88,6 +88,6 @@ class Command(BaseCommand):
                     sheet.write(row, 3, value)
                     row += 1
 
-                name = os.path.join('the_most', the_most.text + '.xls')
+                name = os.path.join('the_most', the_most.text.replace('\u200c', ' ') + '.xls')
                 book.save(name)
         print('OK')
