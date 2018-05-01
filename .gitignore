@@ -5,3 +5,4 @@ env
 *.py[cod]
 main/static/media/profiles
 comments/*
+the_most/*
