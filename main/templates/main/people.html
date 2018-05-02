@@ -38,12 +38,12 @@
                     {% if request.user.is_authenticated %}
                     <div class="extra content">
                         {% if request.user != p.user %}
-                        <a href="{% url 'comment' %}?to={{ p.user.username }}" style="pointer-events: none; cursor: default;">
+                        <a href="{% url 'comment' %}?to={{ p.user.username }}">
                           <i class="pencil alternate icon"></i>
                             ارسال متن
                         </a>
                         {% else %}
-                        <a href="{% url 'opinion' %}" style="pointer-events: none; cursor: default;">
+                        <a href="{% url 'opinion' %}">
                           <i class="pencil alternate icon"></i>
                             ثبت متن
                         </a>

@@ -28,7 +28,7 @@
                 {{ item.text | linebreaksbr }}
               </div>
               <div class="extra">
-                <a href="{{ item.url }}" class="ui right floated button disabled">
+                <a href="{{ item.url }}" class="ui right floated button">
                   ویرایش
                 </a>
               </div>
@@ -54,7 +54,7 @@
                 {{ item.text | linebreaksbr }}
               </div>
               <div class="extra">
-                <a href="{{ item.url }}" class="ui right floated button disabled">
+                <a href="{{ item.url }}" class="ui right floated button">
                   ویرایش
                 </a>
               </div>
@@ -68,9 +68,9 @@
 
             <div>
                 {% if type == 'comment' %}
-                <a class="ui button positive disabled" href="{% url 'comment' %}">متن جدید</a>
+                <a class="ui button positive" href="{% url 'comment' %}">متن جدید</a>
                 {% else %}
-                <a class="ui button positive disabled" href="{% url 'opinion' %}">متن جدید</a>
+                <a class="ui button positive" href="{% url 'opinion' %}">متن جدید</a>
                 {% endif %}
             </div>
     </div>

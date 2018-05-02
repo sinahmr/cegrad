@@ -30,6 +30,8 @@ class Command(BaseCommand):
                 sheet.write(0, 3, "text")
 
                 for i, comment in enumerate(comments):
+                    # text = comment.text
+                    # text.replace("")
                     sheet.write(i+1, 0, comment.id)
                     sheet.write(i+1, 1, comment.commenter.get_name())
                     sheet.write(i+1, 2, comment.target.get_name())
@@ -38,3 +40,20 @@ class Command(BaseCommand):
                 name = os.path.join('comments', user.username + '.xls')
                 book.save(name)
         print('OK')
+
+#
+# def create_valid_text(text):
+#     # text = text.replace("\\", "\\textbackslash")
+#     text = text.replace("#", "\#")
+#     text = text.replace("^", "\^")
+#     text = text.replace("_", "\_")
+#     text = text.replace("@", "\@")
+#     text = text.replace("&", "\&")
+#     text = text.replace("$", "\$")
+#     text = text.replace("~", "\\textasciitilde")
+#     text = text.replace("\n", "\n\n")
+#     file = open('test.txt', 'w')
+#     file.write(text)
+#     file.close()
+#     return text
+#
