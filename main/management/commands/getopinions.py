@@ -33,7 +33,7 @@ class Command(BaseCommand):
                 for i, opinion in enumerate(opinions):
                     sheet.write(i+1, 0, opinion.id)
                     sheet.write(i+1, 1, opinion.teller.get_name())
-                    sheet.write(i+1, 2, f2(f3(f1(f4(opinion.text)))))
+                    sheet.write(i+1, 2, f2(f3(f1(f4(opinion.subject)))))
                     sheet.write(i+1, 3, f2(f3(f1(f4(opinion.text)))))
 
                 name = os.path.join('opinions', user.username + '.xls')
