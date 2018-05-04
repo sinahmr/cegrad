@@ -4,6 +4,7 @@ import xlwt
 import os
 import re
 
+
 class Command(BaseCommand):
     help = "get comments"
 
@@ -35,7 +36,7 @@ class Command(BaseCommand):
                     sheet.write(i+1, 0, comment.id)
                     sheet.write(i+1, 1, comment.commenter.get_name())
                     sheet.write(i+1, 2, comment.target.get_name())
-                    sheet.write(i+1, 3, f2(f3(f1(f4(comment.text)))))
+                    sheet.write(i+1, 3, f2(f3(f1(f4(f5(comment.text))))))
                     # print(comment.id, comment.commenter.get_name())
                 name = os.path.join('comments', user.username + '.xls')
                 book.save(name)
@@ -43,17 +44,20 @@ class Command(BaseCommand):
 
 
 def f1(input):
-    output = input
-    pattern = '\^_+\^'
-    for x in set(re.findall(pattern, input, re.MULTILINE)):
-        y = '\lstinline!%s!' % x
+    output = input.replace('_', '\_')
+    pattern = '\^[\\\_]+\^'
+    for x in set(re.findall(pattern, output, re.MULTILINE)):
+        print(x)
+        z = x.replace('\\', '')
+        print(z)
+        y = '\lstinline!%s!' % z
         output = output.replace(x, y)
     return output
 
 
 def f2(input):
     output = input
-    pattern = '\n'
+    pattern = '[\n]+'
     for x in set(re.findall(pattern, input, re.MULTILINE)):
         y = r' \newline '
         output = output.replace(x, y)
@@ -67,8 +71,26 @@ def f3(input):
 
 def f4(input):
     output = input
-    pattern = '([a-zA-Z\d,#?]+[a-zA-Z\d,\s,<>,.;:!?@#$_$)(]*[a-zA-Z\d,\s,:,.!?)(]+)'
+    pattern = '([a-zA-Z,#?]+[a-zA-Z,\s,<>,.;:!?@#$_$)(]*[a-zA-Z,\s,:,.!?)(]+)'
     for x in set(re.findall(pattern, input, re.MULTILINE)):
         y = '\lr{ %s }' % x
         output = output.replace(x, y)
+    return output
+
+
+def f5(input):
+    output = input
+    s = 0
+    f = len(output)
+    for c in output:
+        if c == '\n':
+            s += 1
+        else:
+            break
+    for c in reversed(output):
+        if c == '\n':
+            f -= 1
+        else:
+            break
+    output = output[s:f]
     return output
