@@ -47,6 +47,7 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='متن نظر')
     show = models.BooleanField(default=True)
 
+
 class Opinion(models.Model):
     teller = models.ForeignKey(UserProfile)
     subject = models.CharField(max_length=1000)

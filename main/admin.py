@@ -87,6 +87,7 @@ class CandidateAdmin(admin.ModelAdmin):
     def the_most_get_text(self, obj):
         return obj.the_most.text
 
+
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(TheMost, TheMostAdmin)
 admin.site.register(Vote, VoteAdmin)
